@@ -3,19 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guía para comprar ropa</title>
+<title>Qué tener en cuenta al comprar ropa</title>
 <style>
-  html,body{margin:0;height:100%;background:#2b2724;font-family:system-ui,sans-serif}
-  .bar{display:flex;align-items:center;gap:12px;padding:10px 16px;background:#1f1c1a;color:#f6f2ea}
-  .bar a{color:#c08a2d;text-decoration:none;font-size:.9rem}
-  iframe{border:0;width:100%;height:calc(100% - 42px);display:block}
+:root{
+  --ink:#2b2724;--paper:#f6f2ea;--card:#fbf8f2;--line:#e4dccc;--muted:#8a8074;
+  --olive:#6b7d3a;--forest:#2f4a2e;--terra:#b5591f;--teal:#1f6b73;--choc:#3f2d20;
+  --amber:#c08a2d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 64px}
+
+/* Header */
+header{
+  background:linear-gradient(150deg,#3a4a24,#5c6d33 70%);
+  color:#f6f2ea;border-radius:0 0 20px 20px;padding:56px 28px 40px;text-align:center;
+  margin-bottom:40px
+}
+.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;opacity:.75;margin-bottom:16px}
+header h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+header p{max-width:620px;margin:18px auto 0;font-size:1rem;opacity:.92}
+header strong{font-weight:700}
+
+/* Sections */
+section{margin-bottom:44px}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.num{width:34px;height:34px;border-radius:9px;color:#fff;font-weight:700;display:grid;place-items:center;flex:0 0 auto}
+.n1{background:var(--teal)}.n2{background:var(--olive)}.n3{background:var(--terra)}
+.sec-head h2{font-size:1.5rem;font-weight:800;line-height:1.1}
+.sec-head .sub{display:block;font-size:.85rem;font-weight:400;color:var(--muted);margin-top:3px}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}}
+
+/* Stat tiles */
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 12px;text-align:center}
+.stat .v{font-size:1.7rem;font-weight:800}
+.stat .l{font-size:.78rem;color:var(--muted);margin-top:6px}
+
+/* Callouts */
+.note{border-left:4px solid var(--terra);background:#f6ecdf;padding:16px 18px;border-radius:0 10px 10px 0;margin-top:16px;font-size:.95rem}
+.note.warm{background:#f7ece2}
+.note.green{border-left-color:var(--olive);background:#eef1e6}
+.note strong{font-weight:700}
+em{font-style:italic}
+
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:12px}
+ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+li{position:relative;padding-left:20px;font-size:.93rem}
+li::before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--olive)}
+li.no::before{background:var(--terra)}
+li.no{color:#8a5a3a}
+.tag{display:inline-block;background:#efe6d2;color:#6a5a30;border-radius:6px;padding:2px 8px;font-size:.82rem;font-weight:600;white-space:nowrap}
+
+/* Colors */
+.pill-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pill-title h3{margin:0}
+.pill{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;background:#efe6d2;color:#7a6a3a;padding:3px 9px;border-radius:20px;font-weight:600}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:14px}
+.sw{text-align:center}
+.sw .chip{height:64px;border-radius:10px;border:1px solid rgba(0,0,0,.06)}
+.sw .name{font-size:.78rem;margin-top:7px;color:var(--muted)}
+
+/* Checklist */
+.check{background:var(--choc);color:#f1e9df;border-radius:18px;padding:30px 28px}
+.check h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.check .lead{opacity:.7;font-size:.92rem;margin-bottom:20px}
+.check ul{gap:14px}
+.check li{padding-left:28px;font-size:.96rem}
+.check li::before{content:"✓";background:none;color:var(--amber);font-weight:800;left:0;top:0;width:auto;height:auto;font-size:1rem}
+.check .tag{background:rgba(255,255,255,.12);color:#e8dcc8}
+
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
+.dl{display:inline-block;margin-top:14px;color:var(--terra);font-weight:600;text-decoration:none;font-size:.9rem}
 </style>
 </head>
 <body>
-  <div class="bar">
-    <strong>Guía para comprar ropa</strong>
-    <a href="guia.pdf" download>Descargar PDF</a>
+<header>
+  <div class="eyebrow">Guía personal de compras</div>
+  <h1>Qué tener en cuenta al comprar ropa</h1>
+  <p>Tu manual rápido en tres frentes: los <strong>colores</strong> que te favorecen, la <strong>horma y cortes</strong> para tu silueta, y tus <strong>medidas</strong> de referencia. Míralo antes de entrar a una tienda.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 1. Medidas -->
+  <section>
+    <div class="sec-head">
+      <div class="num n1">1</div>
+      <h2>Tus medidas<span class="sub">Lo esencial para probar y pedir tallas</span></h2>
+    </div>
+    <div class="card">
+      <div class="grid4">
+        <div class="stat"><div class="v">L</div><div class="l">Talla de camisa</div></div>
+        <div class="stat"><div class="v">182 cm</div><div class="l">Altura</div></div>
+        <div class="stat"><div class="v">105,5 cm</div><div class="l">Pecho</div></div>
+        <div class="stat"><div class="v">94 cm</div><div class="l">Cintura</div></div>
+      </div>
+      <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (105,5 cm) frente a cintura más estrecha (94 cm), con un <em>ratio V-taper de 1,53</em>. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Referencia de talla L: camisa de lino Martín Pescador (Cartagena).</div>
+    </div>
+  </section>
+
+  <!-- 2. Horma y cortes -->
+  <section>
+    <div class="sec-head">
+      <div class="num n2">2</div>
+      <h2>Horma y cortes<span class="sub">Silueta en V atlética · acompaña el estrechamiento hacia la cintura</span></h2>
+    </div>
+    <div class="note green"><strong>La idea central:</strong> tienes figura en <strong>V atlética</strong> (hombros/pecho anchos, cintura más estrecha). Vestir bien <em>no</em> es agrandar los hombros ni esconder el torso, sino <strong>seguir la línea que se estrecha hacia la cintura</strong>. Lo diagonal y entallado favorece; lo recto u holgado quita figura.</div>
+    <div class="note" style="margin-bottom:18px"><strong>Trampa clásica:</strong> la ropa estándar se diseña para cuerpos rectos. Cuando entra en el pecho, sobra tela en la cintura y cuelga como saco.</div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Camisas</h3>
+        <ul>
+          <li>Busca por corte: <span class="tag">athletic fit</span> <span class="tag">tapered</span> <span class="tag">slim entallado</span> o con <strong>pinzas traseras (darts)</strong>.</li>
+          <li>Prefiere tejidos con <strong>elastano/stretch (5–8 %)</strong>: se adaptan mejor a la diferencia pecho-cintura que el algodón 100 % rígido.</li>
+          <li>Cuello de <strong>media apertura</strong> (medium spread) le va bien a tu marco.</li>
+          <li>Si una camisa te gusta pero sobra en cintura: <strong>entállala en los costados</strong> donde un sastre (barato y transformador).</li>
+          <li class="no">Evita cortes <strong>classic, regular, relaxed</strong>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pantalones</h3>
+        <ul>
+          <li>Peso visual arriba → equilibra con <strong>recto o ligeramente entallado</strong> (slim straight / tapered), tiro medio.</li>
+          <li class="no">Evita <strong>skinny</strong> (agranda el torso por contraste).</li>
+          <li class="no">Evita <strong>baggy</strong> (rompe la proporción).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sacos y blazers</h3>
+        <ul>
+          <li><strong>Hombro natural/suave</strong>, sin hombreras marcadas ni estructura pesada (no necesitas más volumen arriba).</li>
+          <li>Con <strong>entalle en cintura</strong> (waist suppression) para seguir la V.</li>
+          <li>Single-breasted; abotona el <strong>botón del medio</strong>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Punto, cuellos y líneas</h3>
+        <ul>
+          <li><strong>Escotes en V</strong> y cuellos abiertos estilizan y alargan; el <strong>crew neck</strong> también funciona.</li>
+          <li><strong>Líneas verticales</strong> y tonos parejos (monocromáticos) estiran la figura: favorable con tu estatura.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Colores -->
+  <section>
+    <div class="sec-head">
+      <div class="num n3">3</div>
+      <h2>Colores<span class="sub">Piel morena media · subtono cálido (dorado/oliva)</span></h2>
+    </div>
+    <div class="note green" style="margin-bottom:18px"><strong>Estrategia general:</strong> colores con <strong>temperatura, tierra y profundidad</strong>. Lo frío/helado y el blanco puro te apagan. Ante dos versiones de un color, elige siempre <strong>la más cálida y con más cuerpo</strong> (verde más oliva, azul más petróleo, rosa más terracota).</div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="pill-title"><h3>Mejores colores</h3><span class="pill">Tierra y cálidos profundos</span></div>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#6b7d3a"></div><div class="name">Verde oliva</div></div>
+        <div class="sw"><div class="chip" style="background:#2f4a2e"></div><div class="name">Verde bosque</div></div>
+        <div class="sw"><div class="chip" style="background:#b5591f"></div><div class="name">Terracota / teja</div></div>
+        <div class="sw"><div class="chip" style="background:#d3a23a"></div><div class="name">Mostaza / ocre</div></div>
+        <div class="sw"><div class="chip" style="background:#b89a6a"></div><div class="name">Camel / caramelo</div></div>
+        <div class="sw"><div class="chip" style="background:#432e1f"></div><div class="name">Chocolate</div></div>
+        <div class="sw"><div class="chip" style="background:#7a2038"></div><div class="name">Vino / burdeos</div></div>
+        <div class="sw"><div class="chip" style="background:#1f6b73"></div><div class="name">Azul petróleo</div></div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:16px">
+      <div class="card">
+        <div class="pill-title"><h3>Neutros recomendados</h3><span class="pill">Mejor que blanco/negro</span></div>
+        <div class="swatches" style="margin-bottom:16px">
+          <div class="sw"><div class="chip" style="background:#efe9dd"></div><div class="name">Crema / hueso</div></div>
+          <div class="sw"><div class="chip" style="background:#d8cbab"></div><div class="name">Beige / arena</div></div>
+          <div class="sw"><div class="chip" style="background:#8a7a4a"></div><div class="name">Caqui</div></div>
+          <div class="sw"><div class="chip" style="background:#1f2b45"></div><div class="name">Marino cálido</div></div>
+        </div>
+        <ul>
+          <li>Crema y hueso en vez de <strong>blanco óptico</strong>.</li>
+          <li>Para "oscuro": <strong>azul marino cálido o marrón oscuro</strong> mejor que negro puro.</li>
+          <li>El negro sirve, pero cerca de la cara <strong>rómpelo</strong> con una prenda cálida (camel, oliva).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Acentos / golpes de color</h3>
+        <div class="swatches">
+          <div class="sw"><div class="chip" style="background:#c0561f"></div><div class="name">Naranja quemado</div></div>
+          <div class="sw"><div class="chip" style="background:#c07a5f"></div><div class="name">Coral tostado</div></div>
+          <div class="sw"><div class="chip" style="background:#1f9aa0"></div><div class="name">Turquesa</div></div>
+          <div class="sw"><div class="chip" style="background:#1f7a52"></div><div class="name">Esmeralda</div></div>
+          <div class="sw"><div class="chip" style="background:#cf9a1f"></div><div class="name">Dorado</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="color:#8a5a3a">Evitar cerca de la cara</h3>
+      <div class="swatches" style="margin-bottom:14px">
+        <div class="sw"><div class="chip" style="background:#f0d8dd"></div><div class="name">Rosa bebé</div></div>
+        <div class="sw"><div class="chip" style="background:#d8cce0"></div><div class="name">Lila</div></div>
+        <div class="sw"><div class="chip" style="background:#dbe6ec"></div><div class="name">Celeste hielo</div></div>
+        <div class="sw"><div class="chip" style="background:#cfd0d2"></div><div class="name">Gris frío</div></div>
+        <div class="sw"><div class="chip" style="background:#ffffff"></div><div class="name">Blanco puro</div></div>
+        <div class="sw"><div class="chip" style="background:#c0448a"></div><div class="name">Fucsia / magenta</div></div>
+      </div>
+      <p style="font-size:.9rem;color:var(--muted)">Si te gustan estos tonos, úsalos en el <strong style="color:var(--ink)">pantalón</strong> o lejos de la cara.</p>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <div class="check">
+    <h2>Checklist para la tienda</h2>
+    <p class="lead">Lo que resuelve el ~90 % del problema, en cinco pasos.</p>
+    <ul>
+      <li>Pide o busca en la etiqueta <span class="tag">athletic / tapered fit</span> con algo de <span class="tag">stretch (5–8 %)</span>.</li>
+      <li>Talla base <strong>L</strong>, pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</li>
+      <li>Elige el color en su versión <strong>más cálida y con cuerpo</strong>; neutros en crema/beige antes que blanco puro.</li>
+      <li>Escotes en V o cuellos abiertos; líneas verticales y tonos parejos.</li>
+      <li>Ten un <strong>sastre de confianza</strong> para entallar la cintura de lo que te guste pero sobre.</li>
+    </ul>
   </div>
-  <iframe src="guia.pdf"></iframe>
+
+  <footer>
+    Guía personal · basada en tus notas de colores, horma y medidas (ago 2026).
+    <br><a class="dl" href="guia.pdf" download>Descargar versión PDF</a>
+  </footer>
+
+</div>
 </body>
 </html>
