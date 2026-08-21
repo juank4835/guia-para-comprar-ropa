@@ -8,29 +8,41 @@
 :root{
   --ink:#2b2724;--paper:#f6f2ea;--card:#fbf8f2;--line:#e4dccc;--muted:#8a8074;
   --olive:#6b7d3a;--forest:#2f4a2e;--terra:#b5591f;--teal:#1f6b73;--choc:#3f2d20;
-  --amber:#c08a2d;
+  --amber:#c08a2d;--skin:#8a6242;--hair:#2a2018;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.55}
 .wrap{max-width:900px;margin:0 auto;padding:0 16px 64px}
+.wrap.wide{max-width:1160px}
 
 /* Header */
 header{
   background:linear-gradient(150deg,#3a4a24,#5c6d33 70%);
-  color:#f6f2ea;border-radius:0 0 20px 20px;padding:56px 28px 40px;text-align:center;
-  margin-bottom:40px
+  color:#f6f2ea;border-radius:0 0 20px 20px;padding:44px 28px 34px;text-align:center
 }
-.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;opacity:.75;margin-bottom:16px}
-header h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
-header p{max-width:620px;margin:18px auto 0;font-size:1rem;opacity:.92}
+.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;opacity:.75;margin-bottom:14px}
+header h1{font-size:clamp(1.8rem,6.5vw,3rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+header p{max-width:620px;margin:14px auto 0;font-size:.98rem;opacity:.92}
 header strong{font-weight:700}
 
+/* Pestañas */
+.tabs{position:sticky;top:0;z-index:20;background:rgba(246,242,234,.95);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);margin-bottom:32px}
+.tabs-in{max-width:900px;margin:0 auto;padding:8px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font:inherit;font-size:.92rem;font-weight:700;cursor:pointer;white-space:nowrap;
+  border:1px solid transparent;background:none;color:var(--muted);padding:10px 16px;border-radius:22px}
+.tab:hover{color:var(--ink);background:#efe6d2}
+.tab[aria-selected="true"]{background:var(--olive);color:#fff}
+.tab:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.panel[hidden]{display:none}
+
 /* Sections */
-section{margin-bottom:44px}
+section{margin-bottom:44px;scroll-margin-top:70px}
 .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
 .num{width:34px;height:34px;border-radius:9px;color:#fff;font-weight:700;display:grid;place-items:center;flex:0 0 auto}
-.n1{background:var(--teal)}.n2{background:var(--olive)}.n3{background:var(--terra)}
+.n1{background:var(--teal)}.n2{background:var(--olive)}.n3{background:var(--terra)}.n4{background:var(--choc)}
 .sec-head h2{font-size:1.5rem;font-weight:800;line-height:1.1}
 .sec-head .sub{display:block;font-size:.85rem;font-weight:400;color:var(--muted);margin-top:3px}
 
@@ -60,7 +72,7 @@ li.no::before{background:var(--terra)}
 li.no{color:#8a5a3a}
 .tag{display:inline-block;background:#efe6d2;color:#6a5a30;border-radius:6px;padding:2px 8px;font-size:.82rem;font-weight:600;white-space:nowrap}
 
-/* Colors */
+/* Colores */
 .pill-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .pill-title h3{margin:0}
 .pill{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;background:#efe6d2;color:#7a6a3a;padding:3px 9px;border-radius:20px;font-weight:600}
@@ -69,165 +81,369 @@ li.no{color:#8a5a3a}
 .sw .chip{height:64px;border-radius:10px;border:1px solid rgba(0,0,0,.06)}
 .sw .name{font-size:.78rem;margin-top:7px;color:var(--muted)}
 
+/* ---------- Pintas ---------- */
+.toolbar{position:sticky;top:53px;z-index:15;background:var(--paper);padding-top:6px;margin-bottom:6px}
+.search{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.search input{flex:1;font:inherit;font-size:.93rem;border:0;background:none;color:var(--ink);outline:none;min-width:0}
+.search input::placeholder{color:var(--muted)}
+.search svg{flex:0 0 auto;opacity:.5}
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fbtn{flex:0 0 auto;font:inherit;font-size:.84rem;font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:var(--card);color:var(--muted);border-radius:20px;padding:8px 14px;white-space:nowrap}
+.fbtn:hover{color:var(--ink);border-color:var(--olive)}
+.fbtn[aria-pressed="true"]{background:var(--olive);border-color:var(--olive);color:#fff}
+.fbtn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.count{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+
+.pintas{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.pintas{grid-template-columns:1fr}.toolbar{position:static}}
+.pinta{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;
+  display:grid;grid-template-columns:184px 1fr;gap:20px;align-items:start}
+.pinta.hide{display:none}
+
+.flatbox{background:#f2ece0;border:1px solid var(--line);border-radius:12px;padding:12px 10px}
+.flat{width:100%;height:auto;display:block}
+
+@media(max-width:520px){
+  .pinta{grid-template-columns:1fr;gap:14px;padding:15px}
+  .flatbox{max-width:210px;margin:0 auto;width:100%}
+}
+
+.pinta-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.when{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.pinta-body h3{font-size:1.1rem;font-weight:800;line-height:1.2;margin:2px 0 0}
+.look{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:start;
+  padding:8px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:0}
+.row dt{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;padding-top:3px}
+.row dd{margin:0;font-size:.88rem;line-height:1.45;display:flex;gap:8px;align-items:flex-start}
+.row dd b{font-weight:700}
+.dot{flex:0 0 auto;width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.14);margin-top:3px}
+@media(max-width:420px){.row{grid-template-columns:1fr;gap:1px;padding:7px 0}.row dt{padding-top:0}}
+
+.why{font-size:.85rem;color:var(--muted);line-height:1.5;border-left:3px solid var(--line);padding-left:12px}
+.why b{color:var(--ink);font-weight:700}
+.copy{align-self:flex-start;font:inherit;font-size:.79rem;font-weight:600;cursor:pointer;
+  background:#efe6d2;color:#6a5a30;border:0;border-radius:8px;padding:7px 12px}
+.copy:hover{background:#e6d9bd}
+.copy:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:28px;
+  text-align:center;color:var(--muted);font-size:.92rem}
+.empty[hidden]{display:none}
+
+/* Fondo de armario */
+.closet{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.shelf h3{display:flex;align-items:center;gap:8px}
+.shelf h3 .n{font-size:.72rem;background:#efe6d2;color:#7a6a3a;border-radius:20px;padding:2px 8px;font-weight:700}
+
 /* Checklist */
-.check{background:var(--choc);color:#f1e9df;border-radius:18px;padding:30px 28px}
+.check{background:var(--choc);color:#f1e9df;border-radius:18px;padding:30px 28px;margin-top:32px}
 .check h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
 .check .lead{opacity:.7;font-size:.92rem;margin-bottom:20px}
 .check ul{gap:14px}
-.check li{padding-left:28px;font-size:.96rem}
-.check li::before{content:"✓";background:none;color:var(--amber);font-weight:800;left:0;top:0;width:auto;height:auto;font-size:1rem}
+.check li{padding-left:0;font-size:.96rem}
+.check li::before{display:none}
 .check .tag{background:rgba(255,255,255,.12);color:#e8dcc8}
+.check label{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.check input{appearance:none;flex:0 0 auto;width:19px;height:19px;margin-top:2px;border-radius:6px;
+  border:2px solid rgba(241,233,223,.4);background:none;cursor:pointer;position:relative}
+.check input:checked{background:var(--amber);border-color:var(--amber)}
+.check input:checked::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+  color:var(--choc);font-size:.8rem;font-weight:800}
+.check input:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.check input:checked + span{opacity:.45;text-decoration:line-through}
+.reset{margin-top:18px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;background:rgba(255,255,255,.12);
+  color:#e8dcc8;border:0;border-radius:8px;padding:7px 12px}
+.reset:hover{background:rgba(255,255,255,.2)}
 
 footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
 .dl{display:inline-block;margin-top:14px;color:var(--terra);font-weight:600;text-decoration:none;font-size:.9rem}
+
+.top{position:fixed;right:16px;bottom:16px;z-index:30;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.1rem;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 4px 14px rgba(43,39,36,.14);
+  opacity:0;visibility:hidden;transition:opacity .2s}
+.top.show{opacity:1;visibility:visible}
+.top:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+.noscript{background:#f6ecdf;border-left:4px solid var(--terra);padding:16px 18px;border-radius:0 10px 10px 0}
+
+@media print{
+  .tabs,.toolbar,.copy,.top,.reset,.count{display:none!important}
+  .panel[hidden]{display:block!important}
+  .pinta.hide{display:grid!important}
+  header{border-radius:0;padding:24px}
+  .pintas{grid-template-columns:1fr 1fr}
+  .pinta,.card,.check{break-inside:avoid}
+  .figbox{position:static}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <div class="eyebrow">Guía personal de compras</div>
   <h1>Qué tener en cuenta al comprar ropa</h1>
-  <p>Tu manual rápido en tres frentes: los <strong>colores</strong> que te favorecen, la <strong>horma y cortes</strong> para tu silueta, y tus <strong>medidas</strong> de referencia. Míralo antes de entrar a una tienda.</p>
+  <p>Las <strong>pintas ya armadas</strong> para tu silueta, y detrás de ellas los <strong>colores</strong>, la <strong>horma</strong> y tus <strong>medidas</strong>. Míralo antes de entrar a una tienda.</p>
 </header>
+
+<div class="tabs">
+  <div class="tabs-in" role="tablist" aria-label="Secciones de la guía">
+    <button class="tab" role="tab" id="t-pintas"  aria-controls="p-pintas"  aria-selected="true">Pintas por ocasión</button>
+    <button class="tab" role="tab" id="t-guia"    aria-controls="p-guia"    aria-selected="false">Guía: color y horma</button>
+    <button class="tab" role="tab" id="t-comprar" aria-controls="p-comprar" aria-selected="false">Qué comprar</button>
+  </div>
+</div>
+
+<div class="wrap wide">
+
+  <!-- ============ PESTAÑA 1: PINTAS ============ -->
+  <div class="panel" id="p-pintas" role="tabpanel" aria-labelledby="t-pintas">
+    <section style="margin-bottom:20px">
+      <div class="sec-head">
+        <div class="num n4">1</div>
+        <h2>Pintas por ocasión<span class="sub">Prenda, pantalón y zapatos dibujados con sus colores reales</span></h2>
+      </div>
+      <div class="note green"><strong>Cómo usar esto:</strong> elige el momento, mira el dibujo y confirma en la ficha. Si te sirve, cópiala al celular para la tienda o para empacar.</div>
+    </section>
+
+    <div class="toolbar">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="q" type="search" placeholder="Buscar prenda o color: oliva, henley, botín, lino…" aria-label="Buscar en las pintas">
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por ocasión">
+        <button class="fbtn" data-cat="all" aria-pressed="true">Todas</button>
+        <button class="fbtn" data-cat="casa" aria-pressed="false">Casa y escritorio</button>
+        <button class="fbtn" data-cat="calle" aria-pressed="false">Calle y vueltas</button>
+        <button class="fbtn" data-cat="gym" aria-pressed="false">Entrenamiento</button>
+        <button class="fbtn" data-cat="noche" aria-pressed="false">Planes y noche</button>
+        <button class="fbtn" data-cat="evento" aria-pressed="false">Eventos y tarima</button>
+        <button class="fbtn" data-cat="calor" aria-pressed="false">Tierra caliente</button>
+      </div>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+
+    <div class="pintas" id="lista"></div>
+    <p class="empty" id="empty" hidden>No hay pintas con ese texto. Prueba con <strong>oliva</strong>, <strong>lino</strong>, <strong>botín</strong> o <strong>chino</strong>.</p>
+    <noscript><p class="noscript">Esta pestaña dibuja las pintas con JavaScript. Actívalo para verlas, o baja a las otras dos pestañas.</p></noscript>
+  </div>
+</div>
 
 <div class="wrap">
 
-  <!-- 1. Medidas -->
-  <section>
-    <div class="sec-head">
-      <div class="num n1">1</div>
-      <h2>Tus medidas<span class="sub">Lo esencial para probar y pedir tallas</span></h2>
-    </div>
-    <div class="card">
-      <div class="grid4">
-        <div class="stat"><div class="v">L</div><div class="l">Talla de camisa</div></div>
-        <div class="stat"><div class="v">182 cm</div><div class="l">Altura</div></div>
-        <div class="stat"><div class="v">105,5 cm</div><div class="l">Pecho</div></div>
-        <div class="stat"><div class="v">94 cm</div><div class="l">Cintura</div></div>
-      </div>
-      <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (105,5 cm) frente a cintura más estrecha (94 cm), con un <em>ratio V-taper de 1,53</em>. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Referencia de talla L: camisa de lino Martín Pescador (Cartagena).</div>
-    </div>
-  </section>
+  <!-- ============ PESTAÑA 2: GUÍA ============ -->
+  <div class="panel" id="p-guia" role="tabpanel" aria-labelledby="t-guia" hidden>
 
-  <!-- 2. Horma y cortes -->
-  <section>
-    <div class="sec-head">
-      <div class="num n2">2</div>
-      <h2>Horma y cortes<span class="sub">Silueta en V atlética · acompaña el estrechamiento hacia la cintura</span></h2>
-    </div>
-    <div class="note green"><strong>La idea central:</strong> tienes figura en <strong>V atlética</strong> (hombros/pecho anchos, cintura más estrecha). Vestir bien <em>no</em> es agrandar los hombros ni esconder el torso, sino <strong>seguir la línea que se estrecha hacia la cintura</strong>. Lo diagonal y entallado favorece; lo recto u holgado quita figura.</div>
-    <div class="note" style="margin-bottom:18px"><strong>Trampa clásica:</strong> la ropa estándar se diseña para cuerpos rectos. Cuando entra en el pecho, sobra tela en la cintura y cuelga como saco.</div>
-
-    <div class="grid2">
-      <div class="card">
-        <h3>Camisas</h3>
-        <ul>
-          <li>Busca por corte: <span class="tag">athletic fit</span> <span class="tag">tapered</span> <span class="tag">slim entallado</span> o con <strong>pinzas traseras (darts)</strong>.</li>
-          <li>Prefiere tejidos con <strong>elastano/stretch (5–8 %)</strong>: se adaptan mejor a la diferencia pecho-cintura que el algodón 100 % rígido.</li>
-          <li>Cuello de <strong>media apertura</strong> (medium spread) le va bien a tu marco.</li>
-          <li>Si una camisa te gusta pero sobra en cintura: <strong>entállala en los costados</strong> donde un sastre (barato y transformador).</li>
-          <li class="no">Evita cortes <strong>classic, regular, relaxed</strong>.</li>
-        </ul>
+    <section id="medidas">
+      <div class="sec-head">
+        <div class="num n1">1</div>
+        <h2>Tus medidas<span class="sub">Lo esencial para probar y pedir tallas</span></h2>
       </div>
       <div class="card">
-        <h3>Pantalones</h3>
-        <ul>
-          <li>Peso visual arriba → equilibra con <strong>recto o ligeramente entallado</strong> (slim straight / tapered), tiro medio.</li>
-          <li class="no">Evita <strong>skinny</strong> (agranda el torso por contraste).</li>
-          <li class="no">Evita <strong>baggy</strong> (rompe la proporción).</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Sacos y blazers</h3>
-        <ul>
-          <li><strong>Hombro natural/suave</strong>, sin hombreras marcadas ni estructura pesada (no necesitas más volumen arriba).</li>
-          <li>Con <strong>entalle en cintura</strong> (waist suppression) para seguir la V.</li>
-          <li>Single-breasted; abotona el <strong>botón del medio</strong>.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Punto, cuellos y líneas</h3>
-        <ul>
-          <li><strong>Escotes en V</strong> y cuellos abiertos estilizan y alargan; el <strong>crew neck</strong> también funciona.</li>
-          <li><strong>Líneas verticales</strong> y tonos parejos (monocromáticos) estiran la figura: favorable con tu estatura.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Colores -->
-  <section>
-    <div class="sec-head">
-      <div class="num n3">3</div>
-      <h2>Colores<span class="sub">Piel morena media · subtono cálido (dorado/oliva)</span></h2>
-    </div>
-    <div class="note green" style="margin-bottom:18px"><strong>Estrategia general:</strong> colores con <strong>temperatura, tierra y profundidad</strong>. Lo frío/helado y el blanco puro te apagan. Ante dos versiones de un color, elige siempre <strong>la más cálida y con más cuerpo</strong> (verde más oliva, azul más petróleo, rosa más terracota).</div>
-
-    <div class="card" style="margin-bottom:16px">
-      <div class="pill-title"><h3>Mejores colores</h3><span class="pill">Tierra y cálidos profundos</span></div>
-      <div class="swatches">
-        <div class="sw"><div class="chip" style="background:#6b7d3a"></div><div class="name">Verde oliva</div></div>
-        <div class="sw"><div class="chip" style="background:#2f4a2e"></div><div class="name">Verde bosque</div></div>
-        <div class="sw"><div class="chip" style="background:#b5591f"></div><div class="name">Terracota / teja</div></div>
-        <div class="sw"><div class="chip" style="background:#d3a23a"></div><div class="name">Mostaza / ocre</div></div>
-        <div class="sw"><div class="chip" style="background:#b89a6a"></div><div class="name">Camel / caramelo</div></div>
-        <div class="sw"><div class="chip" style="background:#432e1f"></div><div class="name">Chocolate</div></div>
-        <div class="sw"><div class="chip" style="background:#7a2038"></div><div class="name">Vino / burdeos</div></div>
-        <div class="sw"><div class="chip" style="background:#1f6b73"></div><div class="name">Azul petróleo</div></div>
-      </div>
-    </div>
-
-    <div class="grid2" style="margin-bottom:16px">
-      <div class="card">
-        <div class="pill-title"><h3>Neutros recomendados</h3><span class="pill">Mejor que blanco/negro</span></div>
-        <div class="swatches" style="margin-bottom:16px">
-          <div class="sw"><div class="chip" style="background:#efe9dd"></div><div class="name">Crema / hueso</div></div>
-          <div class="sw"><div class="chip" style="background:#d8cbab"></div><div class="name">Beige / arena</div></div>
-          <div class="sw"><div class="chip" style="background:#8a7a4a"></div><div class="name">Caqui</div></div>
-          <div class="sw"><div class="chip" style="background:#1f2b45"></div><div class="name">Marino cálido</div></div>
+        <div class="grid4">
+          <div class="stat"><div class="v">L</div><div class="l">Talla de camisa</div></div>
+          <div class="stat"><div class="v">182 cm</div><div class="l">Altura</div></div>
+          <div class="stat"><div class="v">105,5 cm</div><div class="l">Pecho</div></div>
+          <div class="stat"><div class="v">94 cm</div><div class="l">Cintura</div></div>
         </div>
-        <ul>
-          <li>Crema y hueso en vez de <strong>blanco óptico</strong>.</li>
-          <li>Para "oscuro": <strong>azul marino cálido o marrón oscuro</strong> mejor que negro puro.</li>
-          <li>El negro sirve, pero cerca de la cara <strong>rómpelo</strong> con una prenda cálida (camel, oliva).</li>
-        </ul>
+        <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (105,5 cm) frente a cintura más estrecha (94 cm), con un <em>ratio V-taper de 1,53</em>. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Referencia de talla L: camisa de lino Martín Pescador (Cartagena).</div>
       </div>
-      <div class="card">
-        <h3>Acentos / golpes de color</h3>
+    </section>
+
+    <section id="horma">
+      <div class="sec-head">
+        <div class="num n2">2</div>
+        <h2>Horma y cortes<span class="sub">Silueta en V atlética · acompaña el estrechamiento hacia la cintura</span></h2>
+      </div>
+      <div class="note green"><strong>La idea central:</strong> tienes figura en <strong>V atlética</strong> (hombros/pecho anchos, cintura más estrecha). Vestir bien <em>no</em> es agrandar los hombros ni esconder el torso, sino <strong>seguir la línea que se estrecha hacia la cintura</strong>. Lo diagonal y entallado favorece; lo recto u holgado quita figura.</div>
+      <div class="note" style="margin-bottom:18px"><strong>Trampa clásica:</strong> la ropa estándar se diseña para cuerpos rectos. Cuando entra en el pecho, sobra tela en la cintura y cuelga como saco.</div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>Camisas</h3>
+          <ul>
+            <li>Busca por corte: <span class="tag">athletic fit</span> <span class="tag">tapered</span> <span class="tag">slim entallado</span> o con <strong>pinzas traseras (darts)</strong>.</li>
+            <li>Prefiere tejidos con <strong>elastano/stretch (5–8 %)</strong>: se adaptan mejor a la diferencia pecho-cintura que el algodón 100 % rígido.</li>
+            <li>Cuello de <strong>media apertura</strong> (medium spread) le va bien a tu marco.</li>
+            <li>Si una camisa te gusta pero sobra en cintura: <strong>entállala en los costados</strong> donde un sastre (barato y transformador).</li>
+            <li class="no">Evita cortes <strong>classic, regular, relaxed</strong>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Pantalones</h3>
+          <ul>
+            <li>Peso visual arriba → equilibra con <strong>recto o ligeramente entallado</strong> (slim straight / tapered), tiro medio.</li>
+            <li class="no">Evita <strong>skinny</strong> (agranda el torso por contraste).</li>
+            <li class="no">Evita <strong>baggy</strong> (rompe la proporción).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Sacos y blazers</h3>
+          <ul>
+            <li><strong>Hombro natural/suave</strong>, sin hombreras marcadas ni estructura pesada (no necesitas más volumen arriba).</li>
+            <li>Con <strong>entalle en cintura</strong> (waist suppression) para seguir la V.</li>
+            <li>Single-breasted; abotona el <strong>botón del medio</strong>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Punto, cuellos y líneas</h3>
+          <ul>
+            <li><strong>Escotes en V</strong> y cuellos abiertos estilizan y alargan; el <strong>crew neck</strong> también funciona.</li>
+            <li><strong>Líneas verticales</strong> y tonos parejos (monocromáticos) estiran la figura: favorable con tu estatura.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="colores">
+      <div class="sec-head">
+        <div class="num n3">3</div>
+        <h2>Colores<span class="sub">Piel morena media · subtono cálido (dorado/oliva)</span></h2>
+      </div>
+      <div class="note green" style="margin-bottom:18px"><strong>Estrategia general:</strong> colores con <strong>temperatura, tierra y profundidad</strong>. Lo frío/helado y el blanco puro te apagan. Ante dos versiones de un color, elige siempre <strong>la más cálida y con más cuerpo</strong> (verde más oliva, azul más petróleo, rosa más terracota).</div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="pill-title"><h3>Mejores colores</h3><span class="pill">Tierra y cálidos profundos</span></div>
         <div class="swatches">
-          <div class="sw"><div class="chip" style="background:#c0561f"></div><div class="name">Naranja quemado</div></div>
-          <div class="sw"><div class="chip" style="background:#c07a5f"></div><div class="name">Coral tostado</div></div>
-          <div class="sw"><div class="chip" style="background:#1f9aa0"></div><div class="name">Turquesa</div></div>
-          <div class="sw"><div class="chip" style="background:#1f7a52"></div><div class="name">Esmeralda</div></div>
-          <div class="sw"><div class="chip" style="background:#cf9a1f"></div><div class="name">Dorado</div></div>
+          <div class="sw"><div class="chip" style="background:#6b7d3a"></div><div class="name">Verde oliva</div></div>
+          <div class="sw"><div class="chip" style="background:#2f4a2e"></div><div class="name">Verde bosque</div></div>
+          <div class="sw"><div class="chip" style="background:#b5591f"></div><div class="name">Terracota / teja</div></div>
+          <div class="sw"><div class="chip" style="background:#d3a23a"></div><div class="name">Mostaza / ocre</div></div>
+          <div class="sw"><div class="chip" style="background:#b89a6a"></div><div class="name">Camel / caramelo</div></div>
+          <div class="sw"><div class="chip" style="background:#432e1f"></div><div class="name">Chocolate</div></div>
+          <div class="sw"><div class="chip" style="background:#7a2038"></div><div class="name">Vino / burdeos</div></div>
+          <div class="sw"><div class="chip" style="background:#1f6b73"></div><div class="name">Azul petróleo</div></div>
         </div>
       </div>
-    </div>
 
-    <div class="card">
-      <h3 style="color:#8a5a3a">Evitar cerca de la cara</h3>
-      <div class="swatches" style="margin-bottom:14px">
-        <div class="sw"><div class="chip" style="background:#f0d8dd"></div><div class="name">Rosa bebé</div></div>
-        <div class="sw"><div class="chip" style="background:#d8cce0"></div><div class="name">Lila</div></div>
-        <div class="sw"><div class="chip" style="background:#dbe6ec"></div><div class="name">Celeste hielo</div></div>
-        <div class="sw"><div class="chip" style="background:#cfd0d2"></div><div class="name">Gris frío</div></div>
-        <div class="sw"><div class="chip" style="background:#ffffff"></div><div class="name">Blanco puro</div></div>
-        <div class="sw"><div class="chip" style="background:#c0448a"></div><div class="name">Fucsia / magenta</div></div>
+      <div class="grid2" style="margin-bottom:16px">
+        <div class="card">
+          <div class="pill-title"><h3>Neutros recomendados</h3><span class="pill">Mejor que blanco/negro</span></div>
+          <div class="swatches" style="margin-bottom:16px">
+            <div class="sw"><div class="chip" style="background:#efe9dd"></div><div class="name">Crema / hueso</div></div>
+            <div class="sw"><div class="chip" style="background:#d8cbab"></div><div class="name">Beige / arena</div></div>
+            <div class="sw"><div class="chip" style="background:#8a7a4a"></div><div class="name">Caqui</div></div>
+            <div class="sw"><div class="chip" style="background:#1f2b45"></div><div class="name">Marino cálido</div></div>
+          </div>
+          <ul>
+            <li>Crema y hueso en vez de <strong>blanco óptico</strong>.</li>
+            <li>Para "oscuro": <strong>azul marino cálido o marrón oscuro</strong> mejor que negro puro.</li>
+            <li>El negro sirve, pero cerca de la cara <strong>rómpelo</strong> con una prenda cálida (camel, oliva).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Acentos / golpes de color</h3>
+          <div class="swatches">
+            <div class="sw"><div class="chip" style="background:#c0561f"></div><div class="name">Naranja quemado</div></div>
+            <div class="sw"><div class="chip" style="background:#c07a5f"></div><div class="name">Coral tostado</div></div>
+            <div class="sw"><div class="chip" style="background:#1f9aa0"></div><div class="name">Turquesa</div></div>
+            <div class="sw"><div class="chip" style="background:#1f7a52"></div><div class="name">Esmeralda</div></div>
+            <div class="sw"><div class="chip" style="background:#cf9a1f"></div><div class="name">Dorado</div></div>
+          </div>
+        </div>
       </div>
-      <p style="font-size:.9rem;color:var(--muted)">Si te gustan estos tonos, úsalos en el <strong style="color:var(--ink)">pantalón</strong> o lejos de la cara.</p>
-    </div>
-  </section>
 
-  <!-- Checklist -->
-  <div class="check">
-    <h2>Checklist para la tienda</h2>
-    <p class="lead">Lo que resuelve el ~90 % del problema, en cinco pasos.</p>
-    <ul>
-      <li>Pide o busca en la etiqueta <span class="tag">athletic / tapered fit</span> con algo de <span class="tag">stretch (5–8 %)</span>.</li>
-      <li>Talla base <strong>L</strong>, pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</li>
-      <li>Elige el color en su versión <strong>más cálida y con cuerpo</strong>; neutros en crema/beige antes que blanco puro.</li>
-      <li>Escotes en V o cuellos abiertos; líneas verticales y tonos parejos.</li>
-      <li>Ten un <strong>sastre de confianza</strong> para entallar la cintura de lo que te guste pero sobre.</li>
-    </ul>
+      <div class="card">
+        <h3 style="color:#8a5a3a">Evitar cerca de la cara</h3>
+        <div class="swatches" style="margin-bottom:14px">
+          <div class="sw"><div class="chip" style="background:#f0d8dd"></div><div class="name">Rosa bebé</div></div>
+          <div class="sw"><div class="chip" style="background:#d8cce0"></div><div class="name">Lila</div></div>
+          <div class="sw"><div class="chip" style="background:#dbe6ec"></div><div class="name">Celeste hielo</div></div>
+          <div class="sw"><div class="chip" style="background:#cfd0d2"></div><div class="name">Gris frío</div></div>
+          <div class="sw"><div class="chip" style="background:#ffffff"></div><div class="name">Blanco puro</div></div>
+          <div class="sw"><div class="chip" style="background:#c0448a"></div><div class="name">Fucsia / magenta</div></div>
+        </div>
+        <p style="font-size:.9rem;color:var(--muted)">Si te gustan estos tonos, úsalos en el <strong style="color:var(--ink)">pantalón</strong> o lejos de la cara.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PESTAÑA 3: QUÉ COMPRAR ============ -->
+  <div class="panel" id="p-comprar" role="tabpanel" aria-labelledby="t-comprar" hidden>
+    <section id="armario">
+      <div class="sec-head">
+        <div class="num n2">1</div>
+        <h2>Fondo de armario<span class="sub">Las 17 pintas salen de esta lista · cómprala en este orden</span></h2>
+      </div>
+      <div class="closet">
+        <div class="card shelf">
+          <h3>Base <span class="n">primero esto</span></h3>
+          <ul>
+            <li>3 henley: <strong>crema, marino, chocolate</strong></li>
+            <li>2 camisetas cuello redondo: <strong>arena</strong> y <strong>petróleo</strong></li>
+            <li>Camisa oxford <strong>oliva</strong>, athletic fit con stretch</li>
+            <li>Camisa <strong>vino</strong> con elastano</li>
+            <li>Camisa de lino <strong>crema</strong> manga larga</li>
+          </ul>
+        </div>
+        <div class="card shelf">
+          <h3>Capa media</h3>
+          <ul>
+            <li>Cardigan <strong>camel</strong> de punto fino</li>
+            <li>Suéter merino <strong>camel</strong>, cuello redondo</li>
+            <li>Cuello tortuga fino: <strong>chocolate</strong> y <strong>crema</strong></li>
+            <li>Overshirt de sarga <strong>oliva</strong></li>
+            <li>Franela a cuadros <strong>teja y oliva</strong></li>
+          </ul>
+        </div>
+        <div class="card shelf">
+          <h3>Exterior</h3>
+          <ul>
+            <li>Chaqueta trucker <strong>oliva</strong></li>
+            <li>Impermeable <strong>verde bosque</strong> a la cadera</li>
+            <li>Blazer desestructurado <strong>chocolate</strong></li>
+            <li>Blazer de lana <strong>oliva</strong></li>
+            <li>Chaqueta de cuero <strong>café</strong> (la que dura veinte años)</li>
+          </ul>
+        </div>
+        <div class="card shelf">
+          <h3>Pantalones</h3>
+          <ul>
+            <li>Chinos slim straight: <strong>chocolate, caqui, crema, marino</strong></li>
+            <li>Jean <strong>índigo medio</strong> e <strong>índigo oscuro</strong>, sin lavados</li>
+            <li>Pantalón <strong>camel</strong> de corte recto</li>
+            <li>Pantalón de lino <strong>oliva</strong></li>
+            <li>Bermuda chino <strong>arena</strong></li>
+          </ul>
+        </div>
+        <div class="card shelf">
+          <h3>Trajes</h3>
+          <ul>
+            <li>Traje <strong>azul petróleo</strong>, hombro natural, para día</li>
+            <li>Traje <strong>azul marino cálido</strong> para noche</li>
+            <li>Camisas <strong>hueso</strong> y <strong>blanco roto</strong> de vestir</li>
+            <li>Corbata de punto <strong>terracota</strong> y de seda <strong>vino</strong></li>
+          </ul>
+        </div>
+        <div class="card shelf">
+          <h3>Zapatos y correas</h3>
+          <ul>
+            <li>Tenis de cuero <strong>blanco hueso</strong></li>
+            <li>Botín chelsea de gamuza <strong>camel</strong></li>
+            <li>Botín <strong>café oscuro</strong> para lluvia</li>
+            <li>Mocasín <strong>chocolate</strong> y derby <strong>café medio</strong></li>
+            <li>Dos correas: <strong>café medio</strong> y <strong>café oscuro</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="check">
+      <h2>Checklist para la tienda</h2>
+      <p class="lead">Lo que resuelve el ~90 % del problema, en cinco pasos. Marca a medida que revisas.</p>
+      <ul>
+        <li><label><input type="checkbox"><span>Pide o busca en la etiqueta <span class="tag">athletic / tapered fit</span> con algo de <span class="tag">stretch (5–8 %)</span>.</span></label></li>
+        <li><label><input type="checkbox"><span>Talla base <strong>L</strong>, pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</span></label></li>
+        <li><label><input type="checkbox"><span>Elige el color en su versión <strong>más cálida y con cuerpo</strong>; neutros en crema/beige antes que blanco puro.</span></label></li>
+        <li><label><input type="checkbox"><span>Escotes en V o cuellos abiertos; líneas verticales y tonos parejos.</span></label></li>
+        <li><label><input type="checkbox"><span>Ten un <strong>sastre de confianza</strong> para entallar la cintura de lo que te guste pero sobre.</span></label></li>
+      </ul>
+      <button class="reset" type="button" id="reset">Desmarcar todo</button>
+    </div>
   </div>
 
   <footer>
@@ -236,5 +452,351 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
   </footer>
 
 </div>
+
+<button class="top" id="top" type="button" aria-label="Volver arriba">↑</button>
+
+<script>
+(function(){
+"use strict";
+
+var PINTAS = [
+ {cat:"casa", when:"Casa · mañana fría de escritura", name:"El turno largo",
+  prenda:["Henley <b>crema</b> de algodón con elastano, mangas arremangadas","#efe9dd"],
+  capa:["Overshirt de sarga <b>verde oliva</b>, sin forro, para quitarse al mediodía","#6b7d3a"],
+  pant:["Chino <b>chocolate</b> slim straight, tiro medio","#432e1f"],
+  zap:["Tenis de cuero <b>blanco hueso</b>","#efe9dd"],
+  det:["Medias de lana merino en mostaza apagada","#d3a23a"],
+  why:"El henley abre el escote lo justo para alargar, y el overshirt cae recto sin hombrera: acompaña la V en vez de ensancharla."},
+
+ {cat:"casa", when:"Casa · videollamada o entrevista remota", name:"De la cintura para arriba",
+  prenda:["Camisa oxford <b>verde oliva</b>, athletic fit, cuello medium spread","#6b7d3a"],
+  capa:["Blazer sin estructura en <b>chocolate</b>, hombro natural, un botón","#432e1f"],
+  pant:["Chino <b>azul marino cálido</b> (póntelo: se nota en cómo te paras)","#1f2b45"],
+  zap:["Botín chelsea de gamuza <b>camel</b>","#b89a6a"],
+  det:["Reloj de correa café y pared lisa detrás","#8a7a4a"],
+  why:"La cámara aplana los hombros, así que el blazer sin hombrera te evita el efecto armario. Oliva sobre chocolate da profundidad donde el gris te apagaría."},
+
+ {cat:"casa", when:"Casa · tarde de lectura, lluvia afuera", name:"Punto y quietud",
+  prenda:["Camiseta de cuello redondo <b>azul petróleo</b>","#1f6b73"],
+  capa:["Cardigan de punto <b>camel</b>, abierto, largo a la cadera","#b89a6a"],
+  pant:["Pantalón de sarga <b>caqui</b>, corte recto","#8a7a4a"],
+  zap:["Mocasín de cuero <b>chocolate</b> sin medias visibles","#432e1f"],
+  why:"El cardigan abierto dibuja dos líneas verticales sobre el pecho y lo estrecha ópticamente. El petróleo es tu azul: tiene la temperatura que el celeste no tiene."},
+
+ {cat:"calle", when:"Calle · diligencias de la mañana", name:"Uniforme de pueblo",
+  prenda:["Henley <b>crema</b> o camiseta arena de cuello redondo","#efe9dd"],
+  capa:["Chaqueta trucker de algodón en <b>verde oliva</b>","#6b7d3a"],
+  pant:["Jean <b>índigo medio</b>, slim straight, sin roturas","#3b4c6b"],
+  zap:["Tenis <b>blancos</b> de cuero, limpios","#f0ece4"],
+  det:["Correa de cuero café que iguale el tono del reloj","#8a7a4a"],
+  why:"La trucker termina en la cadera y marca dónde acaba el torso, justo lo que una chaqueta larga te borra. Esta es la pinta que deberías poder ponerte sin pensar."},
+
+ {cat:"calle", when:"Calle · aguacero de la sabana", name:"Contra el agua",
+  prenda:["Suéter de lana merino <b>camel</b>, cuello redondo","#b89a6a"],
+  capa:["Impermeable <b>verde bosque</b>, recto a la cadera, con capota","#2f4a2e"],
+  pant:["Chino <b>gris topo</b> cálido con algo de stretch","#6e675e"],
+  zap:["Botín de cuero engrasado <b>café oscuro</b>, suela de tracción","#3f2d20"],
+  why:"El gris entra por el pantalón, lejos de la cara, que es el único sitio donde te conviene. El camel debajo mantiene el tono cálido bajo la barbilla."},
+
+ {cat:"calle", when:"Calle · sol fuerte del mediodía", name:"Sabana despejada",
+  prenda:["Camisa de lino <b>azul claro</b> (la de Martín Pescador), mangas a media antebrazo","#a8c4d4"],
+  pant:["Chino <b>crema</b> o blanco roto, recto","#efe9dd"],
+  zap:["Tenis blancos o alpargata de lona <b>arena</b>","#d8cbab"],
+  det:["Gafas de marco tortuga; camisa medio metida por dentro","#8a7a4a"],
+  why:"Es el único frío que te dejo cerca de la cara, y solo porque el lino lo apaga y el sol te sube el color. Si el día está gris, cámbiala por lino oliva."},
+
+ {cat:"gym", when:"Gym · sala de pesas", name:"Día de barra", short:true,
+  prenda:["Camiseta técnica <b>azul petróleo</b>, tapered, manga a mitad del bíceps","#1f6b73"],
+  capa:["Hoodie <b>caqui</b> de peso medio para el frío de ida y vuelta","#8a7a4a"],
+  pant:["Short de 18 cm en <b>oliva oscuro</b>, con liner","#4a5535"],
+  zap:["Zapatilla de <b>suela plana</b> y firme para sentadilla y peso muerto","#2b2724"],
+  why:"La manga a mitad del bíceps hace ver el brazo más lleno; la larguísima lo corta. Evita el oversized: en un torso ancho no lee relajado, lee más grande."},
+
+ {cat:"gym", when:"Gym · caminata o trote al aire libre", name:"Frío en movimiento",
+  prenda:["Camiseta de manga larga <b>terracota</b>, tejido técnico","#b5591f"],
+  capa:["Cortavientos liviano <b>verde bosque</b>, que se enrolle en el bolsillo","#2f4a2e"],
+  pant:["Jogger técnico <b>gris oscuro</b>, afilado al tobillo","#3a3c38"],
+  zap:["Tenis de <b>amortiguación</b> con drop medio","#2b2724"],
+  why:"El jogger afilado mantiene la proporción; el ancho abajo con tu espalda arriba te vuelve un rectángulo."},
+
+ {cat:"noche", when:"Noche · cena de a dos", name:"Vino en la mesa y en la camisa",
+  prenda:["Camisa <b>vino/burdeos</b> con 5–8 % de elastano, athletic fit, primer botón abierto","#7a2038"],
+  capa:["Gabardina <b>camel</b> corta o blazer chocolate, según el frío","#b89a6a"],
+  pant:["Pantalón de lana fría <b>crema o arena</b>, recto","#d8cbab"],
+  zap:["Mocasín o derby de cuero <b>chocolate</b> lustrado","#432e1f"],
+  det:["Camisa por dentro, correa fina café oscuro","#3f2d20"],
+  why:"Oscuro arriba y claro abajo invierte el peso visual: baja el volumen del torso y sube el de las piernas."},
+
+ {cat:"noche", when:"Noche · almuerzo largo con amigos", name:"Franela sin domingo",
+  prenda:["Camiseta <b>crema</b> de cuello redondo, ajuste limpio","#efe9dd"],
+  capa:["Overshirt de franela a cuadros <b>teja y oliva</b>, abierta","#b5591f"],
+  pant:["Jean <b>índigo oscuro</b> sin lavados, slim straight","#2c3a52"],
+  zap:["Botín de gamuza <b>camel</b>","#b89a6a"],
+  why:"La franela abierta hace de cardigan y verticaliza. El cuadro debe ser mediano y de tonos tierra: el grande y contrastado sobre pecho ancho se vuelve mantel."},
+
+ {cat:"noche", when:"Noche · bar, noche fría", name:"Monocromático café",
+  prenda:["Cuello tortuga fino de merino en <b>chocolate</b>","#432e1f"],
+  capa:["Chaqueta de cuero café o bomber <b>oliva</b>","#6b7d3a"],
+  pant:["Pantalón <b>camel</b> de corte recto, mismo peso de tela","#b89a6a"],
+  zap:["Botín chelsea <b>café oscuro</b>","#3f2d20"],
+  why:"Es la pinta que más te estiliza de todo el set. Tonos vecinos de arriba abajo eliminan el corte horizontal en la cintura y con 182 cm queda una sola línea larga."},
+
+ {cat:"evento", when:"Evento · boda o matrimonio de día", name:"Petróleo de ceremonia",
+  prenda:["Camisa <b>hueso</b>, cuello medium spread, puño sencillo","#f0ebdf"],
+  capa:["Saco del traje <b>azul petróleo</b>, hombro natural, entalle en cintura","#1f6b73"],
+  pant:["Del mismo traje, <b>azul petróleo</b>, break corto sobre el zapato","#1f6b73"],
+  zap:["Derby o monkstrap <b>café medio</b>, cinturón del mismo tono","#8a5a3a"],
+  det:["Corbata de punto terracota y pañuelo crema; abotona solo el del medio","#b5591f"],
+  why:"El petróleo te da el azul formal sin la frialdad del marino corriente, y el hueso evita que el blanco óptico te descolore la cara. Nada de hombreras: ya tienes 49 cm de deltoide."},
+
+ {cat:"evento", when:"Evento · boda de noche o formal", name:"Marino después de las siete",
+  prenda:["Camisa <b>blanco roto</b> de algodón fino con estructura, no brillante","#f4f0e8"],
+  capa:["Saco del traje <b>azul marino cálido</b>, solapa de muesca media, cintura suprimida","#1f2b45"],
+  pant:["Del traje, <b>marino</b>, caída limpia sin quiebre exagerado","#1f2b45"],
+  zap:["Oxford <b>negro pulido</b> o café muy oscuro","#221f1c"],
+  det:["Corbata de seda vino; si el código es suelto, tortuga negro y sin corbata","#7a2038"],
+  why:"De noche el blanco pesa menos, pero igual lo rompes con la corbata vino junto a la cara. El marino cálido —no el azulado— es tu versión del negro."},
+
+ {cat:"evento", when:"Evento · charla, entrevista o foto de autor", name:"El autor en escena",
+  prenda:["Henley <b>chocolate</b> o cuello tortuga fino crema, sin estampado","#432e1f"],
+  capa:["Blazer de lana <b>oliva</b>, desestructurado, dos botones","#6b7d3a"],
+  pant:["Pantalón <b>azul marino cálido</b>, recto, con raya planchada suave","#1f2b45"],
+  zap:["Botín chelsea de gamuza <b>café</b>","#8a5a3a"],
+  det:["Cero logos y cero rayas finas: la cámara las convierte en moiré","#8a8074"],
+  why:"Blazer con henley debajo dice autor, no gerente. El oliva sobre piel morena cálida sale bien en la luz amarilla de auditorio, que arruina los azules fríos."},
+
+ {cat:"calor", when:"Calor · día en el centro histórico", name:"Camisa de camp collar", short:true,
+  prenda:["Camisa de lino manga corta, cuello camp, <b>terracota</b> o petróleo, por fuera","#b5591f"],
+  pant:["Bermuda chino <b>arena</b>, largo justo arriba de la rodilla","#d8cbab"],
+  zap:["Alpargata o tenis de lona <b>crema</b>","#efe9dd"],
+  det:["Sombrero de ala corta en paja natural y gafas de sol","#d3a23a"],
+  why:"El cuello camp abre y baja el punto de atención del pecho. La camisa por fuera solo funciona si el ruedo llega a media bragueta: más larga te acorta las piernas."},
+
+ {cat:"calor", when:"Calor · noche caribeña, cena en la muralla", name:"Lino después del atardecer",
+  prenda:["Camisa de lino manga larga <b>crema</b>, arremangada, tres botones abiertos","#efe9dd"],
+  pant:["Pantalón de lino <b>oliva</b> con caída, corte recto","#6b7d3a"],
+  zap:["Mocasín de cuero <b>café claro</b> sin medias","#a9793f"],
+  det:["Correa tejida café; nada de saco, la humedad no lo perdona","#8a7a4a"],
+  why:"El lino se arruga por diseño, así que la pinta sobrevive el día entero. Crema en vez de blanco puro: al lado del mar la luz ya es durísima."},
+
+ {cat:"calor", when:"Calor · día de vuelo", name:"Frío arriba, calor al aterrizar",
+  prenda:["Henley <b>azul marino</b> de tejido con stretch","#1f2b45"],
+  capa:["Overshirt <b>oliva</b> que sale al bolso apenas bajas del avión","#6b7d3a"],
+  pant:["Chino <b>caqui</b> con elastano, tiro medio, sin arrugas de asiento","#8a7a4a"],
+  zap:["Tenis <b>blancos</b> de cuero, fáciles de quitar en el filtro","#f0ece4"],
+  why:"Una sola pinta cubre los 12 °C de la sabana y los 32 °C de la costa quitando una capa. El stretch es lo que la vuelve viable en cuatro horas de silla."}
+];
+
+var LN = "rgba(0,0,0,.2)", SH = "rgba(0,0,0,.10)", SH2 = "rgba(0,0,0,.2)", SOLE = "rgba(0,0,0,.28)";
+
+/* Cada prenda se dibuja en su propia caja y luego se coloca en la lámina.
+   Así el dibujo es la prenda misma y el color que ves es el hex exacto de la paleta. */
+var PIEZAS = {
+  camisa: {w:96, h:86, d:function(c){ return ''+
+    '<path d="M26,10 L4,26 L13,45 L28,35 Z" fill="'+c+'"/>'+
+    '<path d="M70,10 L92,26 L83,45 L68,35 Z" fill="'+c+'"/>'+
+    '<path d="M70,10 L92,26 L83,45 L68,35 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M26,10 C32,6 36,4 40,3 L48,15 L56,3 C60,4 64,6 70,10 L72,84 L24,84 Z" fill="'+c+'"/>'+
+    '<path d="M48,13 L56,3 C60,4 64,6 70,10 L72,84 L48,84 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M40,3 L48,15 L43,2 Z" fill="'+c+'"/>'+
+    '<path d="M56,3 L48,15 L53,2 Z" fill="'+c+'"/>'+
+    '<path d="M56,3 L48,15 L53,2 Z" fill="rgba(0,0,0,.14)" stroke="none"/>'+
+    '<path d="M48,15 L48,54" stroke="rgba(0,0,0,.22)" stroke-width="1.6" fill="none"/>'+
+    '<circle cx="48" cy="27" r="2.2" fill="rgba(0,0,0,.3)" stroke="none"/>'+
+    '<circle cx="48" cy="42" r="2.2" fill="rgba(0,0,0,.3)" stroke="none"/>'; }},
+
+  chaqueta: {w:104, h:118, d:function(c){ return ''+
+    '<path d="M28,10 L2,30 L13,78 L29,70 Z" fill="'+c+'"/>'+
+    '<path d="M76,10 L102,30 L91,78 L75,70 Z" fill="'+c+'"/>'+
+    '<path d="M76,10 L102,30 L91,78 L75,70 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M40,6 L64,6 L56,116 L48,116 Z" fill="'+c+'"/>'+
+    '<path d="M40,6 L64,6 L56,116 L48,116 Z" fill="'+SH2+'" stroke="none"/>'+
+    '<path d="M28,10 C33,6 37,4 42,3 L45,28 L50,116 L26,116 Z" fill="'+c+'"/>'+
+    '<path d="M76,10 C71,6 67,4 62,3 L59,28 L54,116 L78,116 Z" fill="'+c+'"/>'+
+    '<path d="M76,10 C71,6 67,4 62,3 L59,28 L54,116 L78,116 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M41,3 L51,21 L40,41 L37,15 Z" fill="'+c+'"/>'+
+    '<path d="M63,3 L53,21 L64,41 L67,15 Z" fill="'+c+'"/>'+
+    '<path d="M41,3 L51,21 L40,41 L37,15 Z" fill="rgba(0,0,0,.08)" stroke="none"/>'+
+    '<path d="M63,3 L53,21 L64,41 L67,15 Z" fill="rgba(0,0,0,.17)" stroke="none"/>'; }},
+
+  pantalon: {w:68, h:128, d:function(c){ return ''+
+    '<path d="M2,13 L66,13 L62,126 L42,126 L34,62 L26,126 L6,126 Z" fill="'+c+'"/>'+
+    '<path d="M34,62 L42,126 L62,126 L66,13 L34,13 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M2,2 L66,2 L66,15 L2,15 Z" fill="'+c+'"/>'+
+    '<path d="M16,22 L20,118" stroke="rgba(0,0,0,.13)" stroke-width="1.3" fill="none"/>'+
+    '<path d="M52,22 L48,118" stroke="rgba(0,0,0,.13)" stroke-width="1.3" fill="none"/>'; }},
+
+  bermuda: {w:68, h:78, d:function(c){ return ''+
+    '<path d="M2,13 L66,13 L62,76 L42,76 L34,42 L26,76 L6,76 Z" fill="'+c+'"/>'+
+    '<path d="M34,42 L42,76 L62,76 L66,13 L34,13 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M2,2 L66,2 L66,15 L2,15 Z" fill="'+c+'"/>'; }},
+
+  zapato: {w:78, h:44, d:function(c){ return ''+
+    '<path d="M3,30 L3,20 C3,12 10,8 18,8 L26,8 C33,8 39,12 47,19 C54,25 62,26 70,27 '+
+      'C74,27.5 76,29 76,31 L76,33 L5,33 C3.9,33 3,32 3,30 Z" fill="'+c+'"/>'+
+    '<path d="M47,19 C54,25 62,26 70,27 C74,27.5 76,29 76,31 L76,33 L47,33 Z" fill="'+SH+'" stroke="none"/>'+
+    '<path d="M3,31 L76,31 L76,38 C76,40.5 74,42 71,42 L7,42 C4,42 3,40 3,37 Z" fill="'+SOLE+'" stroke="none"/>'+
+    '<path d="M22,10 L30,16 M28,9 L36,15" stroke="rgba(0,0,0,.22)" stroke-width="1.4" fill="none"/>'; }}
+};
+
+function figura(p){
+  var E = 1, W = 232, pad = 6,
+      B = PIEZAS,
+      camisa = B.camisa,
+      chaqueta = B.chaqueta,
+      pantalon = B[p.short ? 'bermuda' : 'pantalon'],
+      zapato = B.zapato,
+      out = '', y = pad, altoFila;
+
+  function poner(b, color, x, y){
+    return '<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+E+')">' +
+           b.d(color) + '</g>';
+  }
+
+  // fila 1: la prenda y, si la hay, la capa al lado, levemente desfasadas
+  if(p.capa){
+    out += poner(camisa, p.prenda[1], pad, y + 16);
+    out += poner(chaqueta, p.capa[1], W - chaqueta.w * E - pad, y);
+    altoFila = Math.max(camisa.h * E + 16, chaqueta.h * E);
+  } else {
+    out += poner(camisa, p.prenda[1], (W - camisa.w * E) / 2, y);
+    altoFila = camisa.h * E;
+  }
+  y += altoFila + 18;
+
+  // fila 2: el pantalón
+  out += poner(pantalon, p.pant[1], (W - pantalon.w * E) / 2, y);
+  y += pantalon.h * E + 16;
+
+  // fila 3: el zapato
+  out += poner(zapato, p.zap[1], (W - zapato.w * E) / 2, y);
+  y += zapato.h * E + pad;
+
+  return '<svg class="flat" viewBox="0 0 '+W+' '+Math.round(y)+'" xmlns="http://www.w3.org/2000/svg" '+
+         'role="img" aria-label="Prendas de la pinta '+p.name+'">'+
+         '<g stroke="'+LN+'" stroke-width="1.1" stroke-linejoin="round">'+ out +'</g></svg>';
+}
+
+function fila(label, par){
+  if(!par) return '';
+  return '<div class="row"><dt>'+label+'</dt><dd>'+
+         '<span class="dot" style="background:'+par[1]+'"></span><span>'+par[0]+'</span></dd></div>';
+}
+
+function tarjeta(p, i){
+  return '<article class="pinta" data-cat="'+p.cat+'" data-i="'+i+'">'+
+    '<div class="flatbox">'+figura(p)+'</div>'+
+    '<div class="pinta-body">'+
+      '<div><span class="when">'+p.when+'</span><h3>'+p.name+'</h3></div>'+
+      '<dl class="look">'+
+        fila('Prenda', p.prenda)+
+        fila('Capa', p.capa)+
+        fila('Pantalón', p.pant)+
+        fila('Zapatos', p.zap)+
+        fila('Detalle', p.det)+
+      '</dl>'+
+      '<p class="why"><b>Por qué funciona:</b> '+p.why+'</p>'+
+      '<button class="copy" type="button">Copiar pinta</button>'+
+    '</div>'+
+  '</article>';
+}
+
+var lista = document.getElementById('lista');
+lista.innerHTML = PINTAS.map(tarjeta).join('');
+
+/* ---- filtros y búsqueda ---- */
+var cards = [].slice.call(lista.querySelectorAll('.pinta'));
+var fbtns = [].slice.call(document.querySelectorAll('.fbtn'));
+var q = document.getElementById('q');
+var count = document.getElementById('count');
+var empty = document.getElementById('empty');
+var cat = 'all';
+
+cards.forEach(function(c){ c.dataset.text = norm(c.textContent); });
+function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+function apply(){
+  var term = norm(q.value.trim()), n = 0;
+  cards.forEach(function(c){
+    var ok = (cat === 'all' || c.dataset.cat === cat) &&
+             (!term || c.dataset.text.indexOf(term) !== -1);
+    c.classList.toggle('hide', !ok);
+    if(ok) n++;
+  });
+  count.textContent = n === 1 ? 'Mostrando 1 pinta' : 'Mostrando ' + n + ' pintas';
+  empty.hidden = n !== 0;
+}
+fbtns.forEach(function(b){
+  b.addEventListener('click', function(){
+    cat = b.dataset.cat;
+    fbtns.forEach(function(o){ o.setAttribute('aria-pressed', String(o === b)); });
+    apply();
+  });
+});
+q.addEventListener('input', apply);
+apply();
+
+/* ---- copiar ---- */
+lista.addEventListener('click', function(e){
+  var btn = e.target.closest('.copy');
+  if(!btn) return;
+  var card = btn.closest('.pinta');
+  var txt = card.querySelector('h3').textContent + ' (' + card.querySelector('.when').textContent + ')\n' +
+    [].map.call(card.querySelectorAll('.row'), function(r){
+      return '· ' + r.querySelector('dt').textContent + ': ' + r.querySelector('dd span:last-child').textContent;
+    }).join('\n');
+  var ok = function(){
+    var old = btn.textContent; btn.textContent = 'Copiada ✓';
+    setTimeout(function(){ btn.textContent = old; }, 1600);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok, function(){ fallback(txt, ok); });
+  } else { fallback(txt, ok); }
+});
+function fallback(txt, ok){
+  var t = document.createElement('textarea');
+  t.value = txt; t.setAttribute('readonly',''); t.style.position='fixed'; t.style.opacity='0';
+  document.body.appendChild(t); t.select();
+  try{ document.execCommand('copy'); ok(); }catch(err){}
+  document.body.removeChild(t);
+}
+
+/* ---- pestañas ---- */
+var tabs = [].slice.call(document.querySelectorAll('.tab'));
+function show(id, push){
+  tabs.forEach(function(t){
+    var on = t.id === 't-' + id;
+    t.setAttribute('aria-selected', String(on));
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+  });
+  if(push && location.hash !== '#' + id){ history.replaceState(null, '', '#' + id); }
+}
+tabs.forEach(function(t, i){
+  t.addEventListener('click', function(){
+    show(t.id.slice(2), true);
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+  t.addEventListener('keydown', function(e){
+    var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if(!d) return;
+    e.preventDefault();
+    var next = tabs[(i + d + tabs.length) % tabs.length];
+    next.focus(); next.click();
+  });
+});
+var start = (location.hash || '').replace('#','');
+show(['pintas','guia','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
+
+/* ---- checklist y volver arriba ---- */
+document.getElementById('reset').addEventListener('click', function(){
+  [].forEach.call(document.querySelectorAll('.check input[type=checkbox]'), function(i){ i.checked = false; });
+});
+var top = document.getElementById('top');
+top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+window.addEventListener('scroll', function(){
+  top.classList.toggle('show', window.scrollY > 600);
+}, {passive:true});
+})();
+</script>
 </body>
 </html>
