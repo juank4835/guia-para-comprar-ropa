@@ -57,6 +57,16 @@ section{margin-bottom:44px;scroll-margin-top:70px}
 .stat .v{font-size:1.7rem;font-weight:800}
 .stat .l{font-size:.78rem;color:var(--muted);margin-top:6px}
 
+/* Measurements table */
+.medtabla{width:100%;border-collapse:collapse;margin-top:18px;font-size:.92rem}
+.medtabla th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+.medtabla td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.medtabla tr:last-child td{border-bottom:none}
+.medtabla .m{font-weight:600;white-space:nowrap}
+.medtabla .val{font-variant-numeric:tabular-nums;white-space:nowrap}
+.medtabla .nt{color:var(--muted);font-size:.86rem}
+@media(max-width:520px){.medtabla{font-size:.86rem}.medtabla td,.medtabla th{padding-left:6px;padding-right:6px}.medtabla .nt{font-size:.8rem}}
+
 /* Callouts */
 .note{border-left:4px solid var(--terra);background:#f6ecdf;padding:16px 18px;border-radius:0 10px 10px 0;margin-top:16px;font-size:.95rem}
 .note.warm{background:#f7ece2}
@@ -245,12 +255,26 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
       </div>
       <div class="card">
         <div class="grid4">
-          <div class="stat"><div class="v">L</div><div class="l">Talla de camisa</div></div>
-          <div class="stat"><div class="v">182 cm</div><div class="l">Altura</div></div>
-          <div class="stat"><div class="v">105,5 cm</div><div class="l">Pecho</div></div>
-          <div class="stat"><div class="v">94 cm</div><div class="l">Cintura</div></div>
+          <div class="stat"><div class="v">XL</div><div class="l">Talla de camisa</div></div>
+          <div class="stat"><div class="v">182 cm</div><div class="l">Estatura</div></div>
+          <div class="stat"><div class="v">114 cm</div><div class="l">Pecho</div></div>
+          <div class="stat"><div class="v">89 cm</div><div class="l">Cintura</div></div>
         </div>
-        <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (105,5 cm) frente a cintura más estrecha (94 cm), con un <em>ratio V-taper de 1,53</em>. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Referencia de talla L: camisa de lino Martín Pescador (Cartagena).</div>
+        <table class="medtabla">
+          <thead><tr><th>Medida</th><th>Valor</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="m">Estatura</td><td class="val">182 cm</td><td class="nt">Estatura alta: favorece líneas largas y verticales.</td></tr>
+            <tr><td class="m">Pecho</td><td class="val">114 cm</td><td class="nt">Talla XL en la mayoría de camisas de marca.</td></tr>
+            <tr><td class="m">Cintura natural</td><td class="val">89 cm</td><td class="nt">≈35" · talla 34 en pantalón.</td></tr>
+            <tr><td class="m">Cadera</td><td class="val">99 cm</td><td class="nt">Índice cintura-cadera ≈ 0,90: silueta en V.</td></tr>
+            <tr><td class="m">Hombros</td><td class="val">48 cm</td><td class="nt">La que decide la talla del saco.</td></tr>
+            <tr><td class="m">Largo de manga</td><td class="val">62–63 cm</td><td class="nt">Rango L estándar: casi siempre te sirve.</td></tr>
+            <tr><td class="m">Entrepierna al suelo</td><td class="val">87 cm</td><td class="nt">Largo de pierna (inseam) para pantalón.</td></tr>
+            <tr><td class="m">Torso</td><td class="val">95 cm</td><td class="nt">Relación pierna-torso equilibrada.</td></tr>
+            <tr><td class="m">Tiro</td><td class="val">25–27 cm</td><td class="nt">Medio: el que mejor te cae.</td></tr>
+          </tbody>
+        </table>
+        <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (114 cm) frente a cintura estrecha (89 cm): <em>25 cm de diferencia</em>, silueta en V marcada. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Talla base <strong>XL</strong> en camisa, <strong>34</strong> en pantalón.</div>
       </div>
     </section>
 
@@ -437,7 +461,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
       <p class="lead">Lo que resuelve el ~90 % del problema, en cinco pasos. Marca a medida que revisas.</p>
       <ul>
         <li><label><input type="checkbox"><span>Pide o busca en la etiqueta <span class="tag">athletic / tapered fit</span> con algo de <span class="tag">stretch (5–8 %)</span>.</span></label></li>
-        <li><label><input type="checkbox"><span>Talla base <strong>L</strong>, pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</span></label></li>
+        <li><label><input type="checkbox"><span>Talla base <strong>XL</strong> en camisa (34 en pantalón), pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</span></label></li>
         <li><label><input type="checkbox"><span>Elige el color en su versión <strong>más cálida y con cuerpo</strong>; neutros en crema/beige antes que blanco puro.</span></label></li>
         <li><label><input type="checkbox"><span>Escotes en V o cuellos abiertos; líneas verticales y tonos parejos.</span></label></li>
         <li><label><input type="checkbox"><span>Ten un <strong>sastre de confianza</strong> para entallar la cintura de lo que te guste pero sobre.</span></label></li>
