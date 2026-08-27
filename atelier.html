@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte de Mesures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap">
+
+<style>
+  :root{
+    /* Paleta de la guía — cálida y terrosa, siempre en claro */
+    --paper:#f6f2ea;
+    --sheet:#fbf8f2;
+    --sheet-2:#f1ece1;
+    --ink:#2b2724;
+    --ink-2:#5a5248;
+    --muted:#8a8074;
+    --rule:#d7cdbb;
+    --hair:#e6ded0;
+    --accent:#7a2038;      /* vino / burdeos */
+    --wash-a:#efe8db;
+    --wash-b:#e3dbca;
+    --g-slim:#7a2038;      /* vino     */
+    --g-regular:#1f6b73;   /* petróleo */
+    --g-relax:#6b7d3a;     /* oliva    */
+    --g-target:#c08a2d;    /* ámbar    */
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+    font-weight:300;font-size:15px;line-height:1.6;
+    padding:clamp(26px,5vw,72px) clamp(18px,5vw,60px) clamp(48px,7vw,96px);
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:1140px;margin:0 auto}
+
+  .eyebrow{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  .rule{height:1px;background:var(--rule);border:0;margin:0}
+  .hair{height:1px;background:var(--hair);border:0;margin:0}
+  .display{font-family:"Italiana",Didot,"Bodoni MT",serif;font-weight:400}
+
+  /* ── masthead ── */
+  header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:20px;padding-bottom:22px;border-bottom:1px solid var(--ink)}
+  .maison{display:flex;flex-direction:column;gap:12px}
+  .maison h1{
+    font-family:"Italiana",Didot,serif;font-weight:400;margin:0;
+    font-size:clamp(30px,5.2vw,58px);line-height:1;letter-spacing:.22em;text-transform:uppercase;
+  }
+  .maison .sub{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .folio{text-align:right;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);line-height:2}
+  .folio b{font-family:"Italiana",serif;font-size:19px;letter-spacing:.14em;color:var(--ink);font-weight:400}
+
+  /* ── spread ── */
+  .spread{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+    gap:clamp(26px,5vw,72px);padding:clamp(30px,5vw,64px) 0}
+  @media (max-width:900px){ .spread{grid-template-columns:1fr;gap:44px} }
+
+  .plate{position:relative}
+  .plate svg{width:100%;height:auto;display:block}
+  .platefoot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;
+    margin-top:20px;padding-top:12px;border-top:1px solid var(--hair);
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:inherit;font-size:10.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;
+    background:transparent;color:var(--muted);border:1px solid var(--rule);border-radius:1px;
+    padding:9px 14px 8px;cursor:pointer;
+    transition:background .25s ease,color .25s ease,border-color .25s ease;
+  }
+  .chip i{display:block;width:14px;height:0;border-top:2px dashed var(--c);opacity:.55;
+    transition:opacity .25s ease,border-color .25s ease}
+  .chip:hover{border-color:var(--c);color:var(--ink)}
+  .chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--sheet)}
+  .chip[aria-pressed="true"] i{border-top-color:var(--sheet);opacity:1}
+  .chip:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+  .chip[data-fit="slim"]{--c:var(--g-slim)}
+  .chip[data-fit="regular"]{--c:var(--g-regular)}
+  .chip[data-fit="relax"]{--c:var(--g-relax);}
+  .chip[data-fit="relax"] i{border-top-style:dotted}
+  .chip[data-fit="target"]{--c:var(--g-target)}
+  .chip[data-fit="target"] i{border-top-style:solid}
+
+  .allbtn{font-family:inherit;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+    background:transparent;color:var(--muted);border:1px solid var(--rule);border-radius:1px;
+    padding:7px 12px 6px;cursor:pointer;transition:color .25s ease,border-color .25s ease}
+  .allbtn:hover{color:var(--ink);border-color:var(--ink)}
+  .allbtn:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
+
+  .fits{margin-top:18px;display:flex;flex-direction:column}
+  .fitrow{
+    display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:start;
+    width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--hair);
+    padding:15px 0;cursor:pointer;font-family:inherit;color:inherit;
+  }
+  .fitrow:first-child{border-top:1px solid var(--rule)}
+  .fitrow:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+  .fitrow .sw{display:block;margin-top:7px;height:0;border-top:2px dashed var(--c);opacity:.35;
+    transition:opacity .25s ease}
+  .fitrow[aria-pressed="true"] .sw{opacity:1}
+  .fitrow .fb{display:flex;flex-direction:column;gap:5px}
+  .fitrow .nm{font-family:"Italiana",serif;font-size:19px;letter-spacing:.06em;color:var(--muted);
+    transition:color .25s ease}
+  .fitrow[aria-pressed="true"] .nm{color:var(--c)}
+  .fitrow .sp{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .fitrow .vd{font-size:13.2px;line-height:1.6;color:var(--muted);max-width:58ch;
+    transition:color .25s ease}
+  .fitrow[aria-pressed="true"] .vd{color:var(--ink-2)}
+  .fitrow[data-fit="slim"]{--c:var(--g-slim)}
+  .fitrow[data-fit="regular"]{--c:var(--g-regular)}
+  .fitrow[data-fit="relax"]{--c:var(--g-relax)}
+  .fitrow[data-fit="target"]{--c:var(--g-target)}
+  .fitrow[data-fit="target"] .sw{border-top-style:solid}
+  .fitrow[data-fit="relax"] .sw{border-top-style:dotted}
+
+  /* svg roles */
+  .fig-fill{fill:url(#wash)}
+  .fig-line{fill:none;stroke:var(--ink);stroke-width:.5;stroke-linejoin:round;opacity:.9}
+  .fig-hair{fill:none;stroke:var(--ink);stroke-width:.28;opacity:.34}
+  .call{stroke:var(--ink);stroke-width:.26;fill:none;opacity:.5}
+  .callend{fill:var(--accent)}
+  .gar{fill:none;stroke-width:.46;opacity:.9;stroke-linecap:round}
+  .gar-f{stroke:none;opacity:.05}
+  .gset{opacity:0;transition:opacity .4s ease}
+  .gset.on{opacity:1}
+  @media (prefers-reduced-motion:reduce){ .gset{transition:none} }
+  .lbl{font-family:"Jost",sans-serif;font-weight:400;font-size:3.5px;fill:var(--ink);
+    letter-spacing:.26em;text-transform:uppercase}
+  .lbl-v{font-family:"Italiana",serif;font-size:6.4px;fill:var(--ink)}
+  .lbl-s{font-family:"Jost",sans-serif;font-weight:300;font-style:italic;font-size:3.3px;fill:var(--muted)}
+  .lbl-g{font-family:"Jost",sans-serif;font-weight:400;font-size:3.4px;letter-spacing:.16em;
+    text-transform:uppercase;opacity:0;transition:opacity .3s ease}
+  .lbl-g.on{opacity:1}
+  .garcall{opacity:0;transition:opacity .3s ease}
+  .garcall.on{opacity:1}
+  .vert{font-family:"Jost",sans-serif;font-weight:400;font-size:3.3px;fill:var(--muted);letter-spacing:.28em;text-transform:uppercase}
+
+  /* ── carte ── */
+  .carte h2,.block h2{
+    font-family:"Italiana",serif;font-weight:400;font-size:clamp(24px,3vw,32px);
+    margin:0 0 4px;letter-spacing:.06em;
+  }
+  .carte .fr{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:26px}
+  .rows{display:flex;flex-direction:column}
+  .r{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:14px;
+    padding:13px 0;border-bottom:1px solid var(--hair)}
+  .r:last-child{border-bottom:0}
+  .r .n{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+  .r .n em{display:block;font-style:italic;font-size:11px;letter-spacing:.06em;
+    text-transform:none;color:var(--muted);margin-top:2px}
+  .r .v{font-family:"Italiana",serif;font-size:26px;line-height:1;white-space:nowrap}
+  .r .v small{font-family:"Jost",sans-serif;font-size:11px;letter-spacing:.14em;color:var(--muted);
+    margin-left:6px;font-weight:300}
+  .r.accent .v{color:var(--accent)}
+
+  .note{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);
+    font-size:13px;color:var(--ink-2);line-height:1.65;max-width:46ch}
+  .note b{font-weight:400;color:var(--ink)}
+
+  /* ── proporciones ── */
+  .band{border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media (max-width:820px){ .band{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:470px){ .band{grid-template-columns:1fr} }
+  .prop{padding:30px 26px 32px;border-left:1px solid var(--hair)}
+  .prop:first-child{border-left:0;padding-left:0}
+  @media (max-width:820px){ .prop:nth-child(3){border-left:0} }
+  .prop .v{font-family:"Italiana",serif;font-size:46px;line-height:.9;letter-spacing:.01em}
+  .prop .k{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+  .prop .d{font-size:13px;color:var(--ink-2);margin-top:10px;line-height:1.55;max-width:26ch}
+  .prop.key .v{color:var(--accent)}
+
+  /* ── vestuario ── */
+  .block{padding:clamp(34px,5vw,64px) 0 0}
+  .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(26px,5vw,72px);
+    margin-top:28px}
+  @media (max-width:900px){ .cols{grid-template-columns:1fr;gap:34px} }
+  .lead{font-size:15.5px;color:var(--ink-2);line-height:1.7;max-width:34ch}
+  .lead .first{font-family:"Italiana",serif;font-size:22px;color:var(--ink);display:block;margin-bottom:12px;
+    letter-spacing:.04em}
+  .look{display:flex;flex-direction:column}
+  .look .item{display:grid;grid-template-columns:120px 1fr;gap:22px;padding:18px 0;
+    border-top:1px solid var(--hair);align-items:baseline}
+  .look .item:first-child{border-top:1px solid var(--rule)}
+  .look .g{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  .look .t{font-family:"Italiana",serif;font-size:22px;letter-spacing:.05em}
+  .look .t span{font-family:"Jost",sans-serif;font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin-left:10px}
+  .look .d{font-size:13.4px;color:var(--ink-2);margin-top:7px;line-height:1.6;max-width:52ch}
+
+  footer{margin-top:clamp(40px,6vw,80px);padding-top:20px;border-top:1px solid var(--ink);
+    display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  footer p{margin:0;max-width:62ch;letter-spacing:.02em;text-transform:none;font-size:12.5px;
+    line-height:1.65;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <header>
+    <div class="maison">
+      <span class="eyebrow">Dossier de medidas</span>
+      <h1>Juan Camilo</h1>
+      <span class="sub">Toma de medidas · cinta métrica · Bogotá</span>
+    </div>
+    <div class="folio">
+      Nº 001<br><b>Agosto 2026</b><br>Escala 1:1
+    </div>
+  </header>
+
+  <section class="spread">
+
+    <!-- ── planche ── -->
+    <div class="plate">
+      <svg viewBox="-76 -20 156 214" role="img" aria-label="Croquis a escala con las medidas de hombros, pecho, cintura, cadera, manga, estatura, torso y entrepierna, y el contorno de la camisa objetivo">
+        <defs>
+          <linearGradient id="wash" x1="0" y1="0" x2="1" y2=".4">
+            <stop offset="0%" stop-color="var(--wash-b)"/>
+            <stop offset="45%" stop-color="var(--wash-a)"/>
+            <stop offset="100%" stop-color="var(--wash-b)"/>
+          </linearGradient>
+          <radialGradient id="floor" cx=".5" cy=".5" r=".5">
+            <stop offset="0%" stop-color="var(--ink)" stop-opacity=".16"/>
+            <stop offset="100%" stop-color="var(--ink)" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <ellipse cx="0" cy="183" rx="30" ry="3.4" fill="url(#floor)"/>
+
+        <g id="figure"></g>
+
+        <g id="garment"></g>
+
+        <g id="calls"></g>
+      </svg>
+
+      <div class="chips" id="chips">
+        <button class="chip" data-fit="slim" aria-pressed="false"><i></i>Slim</button>
+        <button class="chip" data-fit="regular" aria-pressed="false"><i></i>Regular</button>
+        <button class="chip" data-fit="relax" aria-pressed="false"><i></i>Relajado</button>
+        <button class="chip" data-fit="target" aria-pressed="true"><i></i>Tu camisa</button>
+      </div>
+      <div class="platefoot">
+        <span>Cada corte, dibujado como se ve puesto · las cifras son medidas de prenda</span>
+        <button class="allbtn" id="allbtn">Mostrar todos</button>
+      </div>
+
+      <div class="fits" id="fits">
+        <button class="fitrow" data-fit="slim" aria-pressed="false">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="fb">
+            <span class="nm">Slim</span>
+            <span class="sp">Prenda · pecho 118 · cintura 100 · hombro 46,8 · largo 74 · manga 63</span>
+            <span class="vd">Ocho centímetros de holgura sobre tu pecho: el mínimo para que cierre sin tirar, y sin aire para una camiseta debajo. El hombro de 46,8 te queda un centímetro corto — la costura se monta sobre el deltoides.</span>
+          </span>
+        </button>
+        <button class="fitrow" data-fit="regular" aria-pressed="false">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="fb">
+            <span class="nm">Regular</span>
+            <span class="sp">Prenda · pecho 126 · cintura 110 · hombro 48,8 · largo 77 · manga 64,5</span>
+            <span class="vd">Dieciséis de holgura y un hombro que cae justo donde termina el tuyo: la talla que de verdad sirve comprada de percha. Sobran unos veinte centímetros de cintura — ahí entra la costurera.</span>
+          </span>
+        </button>
+        <button class="fitrow" data-fit="relax" aria-pressed="false">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="fb">
+            <span class="nm">Relajado</span>
+            <span class="sp">Prenda · pecho 138 · cintura 128 · hombro 53 · largo 80 · manga 66</span>
+            <span class="vd">Veintiocho de holgura y hombro caído de 53: no es que quede grande, está diseñado para caer cinco centímetros por fuera del hueso. Se lee intencional si el largo se queda en 80.</span>
+          </span>
+        </button>
+        <button class="fitrow" data-fit="target" aria-pressed="true">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="fb">
+            <span class="nm">Tu camisa</span>
+            <span class="sp">Prenda · pecho 123 · cintura 101 · hombro 48 · largo 80 · manga 66</span>
+            <span class="vd">Pecho de regular con cintura de slim: veintidós de diferencia, casi tu drop exacto de 21. Por eso esta te queda y las de percha no — ninguna marca corta esa combinación en serie.</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── carte de mesures ── -->
+    <div class="carte">
+      <h2>Carte de mesures</h2>
+      <div class="fr">Medidas de cuerpo · centímetros</div>
+
+      <div class="rows">
+        <div class="r"><div class="n">Estatura<em>hauteur</em></div><div class="v">182</div></div>
+        <div class="r"><div class="n">Hombros<em>épaules · ancho directo</em></div><div class="v">48</div></div>
+        <div class="r accent"><div class="n">Pecho<em>buste · contorno</em></div><div class="v">110<small>110–114</small></div></div>
+        <div class="r"><div class="n">Cintura<em>taille · natural</em></div><div class="v">89</div></div>
+        <div class="r"><div class="n">Cadera<em>hanche</em></div><div class="v">99</div></div>
+        <div class="r"><div class="n">Manga<em>manche · hombro a muñeca</em></div><div class="v">62<small>—63</small></div></div>
+        <div class="r"><div class="n">Entrepierna<em>entrejambe · al suelo</em></div><div class="v">87</div></div>
+        <div class="r"><div class="n">Torso<em>buste vertical</em></div><div class="v">95</div></div>
+      </div>
+
+      <div class="note">
+        <b>La prenda objetivo — camisa de lino.</b> Espalda 48 · pecho 123 · cintura 101 · manga larga 66 · largo 80. Es el patrón dibujado en línea de vino sobre el croquis. Compárala con los otros tres cortes —slim, regular y relajado— con los botones bajo la figura: todos están trazados a la misma escala sobre tu cuerpo.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── proporciones ── -->
+  <section class="band">
+    <div class="prop key">
+      <div class="v">21</div>
+      <div class="k">Drop pecho–cintura</div>
+      <div class="d">La confección industrial trabaja con 15–18. Tu cuerpo queda fuera de esa horma.</div>
+    </div>
+    <div class="prop">
+      <div class="v">0,81</div>
+      <div class="k">Cintura sobre pecho</div>
+      <div class="d">Torso en V. El corte recto pierde la cintura y cae plano.</div>
+    </div>
+    <div class="prop">
+      <div class="v">0,90</div>
+      <div class="k">Cintura sobre cadera</div>
+      <div class="d">Diez centímetros de diferencia: pierna recta o taper suave.</div>
+    </div>
+    <div class="prop">
+      <div class="v">0,478</div>
+      <div class="k">Pierna sobre estatura</div>
+      <div class="d">Parte alta del rango medio. El tiro medio te favorece.</div>
+    </div>
+  </section>
+
+  <!-- ── vestuario ── -->
+  <section class="block">
+    <h2>El vestuario</h2>
+    <div class="cols">
+      <p class="lead">
+        <span class="first">Comprar siempre por pecho.</span>
+        Es la medida que no perdona: si el pecho no da, la prenda no existe y no hay arreglo que la salve. El hombro que venga con esa talla va a caer ancho —con 48 de hombro y 110 de pecho siempre sobra— y eso sí se vive: se lee como corte relajado. La cintura, el largo de manga y el bajo los resuelve una costurera en treinta minutos.
+      </p>
+      <div class="look">
+        <div class="item"><div class="g">Camiseta</div>
+          <div><div class="t">L<span>corte relaxed</span></div>
+          <div class="d">Hombro de prenda 48–50 cm. El slim fit tira del pecho y anula la caída en la cintura.</div></div></div>
+        <div class="item"><div class="g">Camisa</div>
+          <div><div class="t">L<span>eu 41–42</span></div>
+          <div class="d">Pecho de prenda 118–125 cm y manga larga. En marcas europeas de corte slim, sube a XL o pide largo <em>tall</em>.</div></div></div>
+        <div class="item"><div class="g">Saco</div>
+          <div><div class="t">IT 54<span>us 44 r</span></div>
+          <div class="d">Talla por pecho. Sobrarán 4–6 cm de cintura: entállalo. Es el arreglo más barato y el que más se nota.</div></div></div>
+        <div class="item"><div class="g">Pantalón</div>
+          <div><div class="t">W 34–35<span>l 34</span></div>
+          <div class="d">W35 midiendo en cintura natural; W34 en denim con elastano. Tiro medio, 25–27 cm.</div></div></div>
+        <div class="item"><div class="g">Abrigo</div>
+          <div><div class="t">EU 54<span>l / xl</span></div>
+          <div class="d">Si va sobre saco, una talla más y verifica que la costura de hombro caiga sobre el hueso.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Los anchos frontales —40, 32 y 36 cm— y las profundidades del perfil —30, 25 y 27 cm— se derivan de los contornos asumiendo sección elíptica, con un margen de ±2 cm. El resto son medidas directas de cinta. El croquis está trazado a escala real sobre la vertical de 182 cm. Las equivalencias de talla son orientativas y varían entre casas.</p>
+    <span>Dossier Nº 001 · Ago 2026</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);
+    if(t!=null)e.textContent=t;return e;}
+  function add(p,n,a,t){var e=el(n,a,t);document.getElementById(p).appendChild(e);return e;}
+
+  /* ── silueta a escala ── */
+  var start=[0,20];
+  var segs=[
+    [3.5,20, 5.4,22, 5.6,26.5],[5.8,28.2, 8,29, 10.5,29.6],[15.5,30.4, 20.5,31, 23.9,32.8],
+    [22,36.5, 20.9,41.5, 20.5,46.8],[20.1,54, 18.4,62.5, 16.4,70.5],[17.8,76.5, 18.5,82, 18.4,87.5],
+    [18.3,92, 17.9,96.5, 17.2,100.5],[16.2,110, 14.4,121, 13.4,130],[13.4,134, 13.6,138.5, 13.5,143],
+    [12.8,153, 10.8,164, 10.0,172],[10.0,175, 11.0,177.4, 11.6,179.4],[12.2,181.2, 11.0,182, 8.8,182],
+    [6.6,182, 4.4,182, 3.0,182],[1.6,182, 1.2,180.6, 1.6,178.6],[1.9,176.4, 2.6,174.4, 2.9,172],
+    [3.4,163, 3.6,152, 3.6,143],[3.6,138.5, 3.6,134, 3.6,130],[3.4,120, 2.9,106, 2.4,99.6],
+    [2.0,97.6, 1.2,96.6, 0,96.6]
+  ];
+  var d='M '+start[0]+','+start[1], pts=[start];
+  segs.forEach(function(s){d+=' C '+s[0]+','+s[1]+' '+s[2]+','+s[3]+' '+s[4]+','+s[5];pts.push([s[4],s[5]]);});
+  for(var i=segs.length-1;i>=0;i--){var s=segs[i],p=pts[i];
+    d+=' C '+(-s[2])+','+s[3]+' '+(-s[0])+','+s[1]+' '+(-p[0])+','+p[1];}
+  var BODY=d+' Z';
+  function mirror(q){return q.replace(/-?\d+(\.\d+)?,/g,function(m){return (-parseFloat(m))+',';});}
+  var ARM='M 11,30.5 C 18.5,31 24.4,33.6 26.8,38.6 C 28.4,41.6 29.3,44.8 29.5,48 '
+    +'C 29.7,54 30.2,60 30.4,65.5 C 30.6,72 30.0,79 28.8,86 C 28.4,89 28.0,91 27.8,92.5 '
+    +'C 29.6,96 29.4,103 27.2,109.5 C 26.2,112.6 23.4,112.8 22.4,110 C 21.4,105 21.6,98 22.3,92.5 '
+    +'C 21.9,88 21.0,80 20.4,72 C 19.6,64 19.2,55 19.0,48 C 18.6,42 15.4,34.5 11,30.5 Z';
+  var HEAD='M 0,0 C 5.8,0 7.7,5.2 7.7,11.2 C 7.7,18.2 4.6,23.8 0,23.8 C -4.6,23.8 -7.7,18.2 -7.7,11.2 C -7.7,5.2 -5.8,0 0,0 Z';
+
+  [mirror(ARM),ARM,BODY,HEAD].forEach(function(q){
+    add('figure','path',{class:'fig-fill',d:q});
+    add('figure','path',{class:'fig-line',d:q});
+  });
+  ['M -15.4,34.4 C -9.8,32.3 -4.6,31.8 0,32.2','M 15.4,34.4 C 9.8,32.3 4.6,31.8 0,32.2',
+   'M 0,96.8 L 0,182','M -6.2,20.4 C -3.4,22.6 3.4,22.6 6.2,20.4'
+  ].forEach(function(q){ add('figure','path',{class:'fig-hair',d:q}); });
+
+  /* ── cuatro cortes, cada uno con su color y su trazo ── */
+  var FITS=[
+    {k:'slim',    ch:29.5,  wa:25,    hem:26,    len:74, sh:23.4, cuffW:8.5, slv:63,   dash:'2.6 1.7',
+     nm:'Slim',      g:{hombro:'46,8',pecho:'118',cintura:'100',bajo:'104',manga:'63',largo:'74'}},
+    {k:'regular', ch:31.5,  wa:27.5,  hem:28.25, len:77, sh:24.4, cuffW:9,   slv:64.5, dash:'5 2.2',
+     nm:'Regular',   g:{hombro:'48,8',pecho:'126',cintura:'110',bajo:'113',manga:'64,5',largo:'77'}},
+    {k:'relax',   ch:34.5,  wa:32,    hem:32.5,  len:80, sh:26.5, cuffW:10,  slv:66,   dash:'1.1 1.7',
+     nm:'Relajado',  g:{hombro:'53',pecho:'138',cintura:'128',bajo:'130',manga:'66',largo:'80'}},
+    {k:'target',  ch:30.75, wa:25.25, hem:27,    len:80, sh:24,   cuffW:9,   slv:66,   dash:'0',
+     nm:'Tu camisa', g:{hombro:'48',pecho:'123',cintura:'101',bajo:'108',manga:'66',largo:'80'}}
+  ];
+  function shY(p){ return 32.4+Math.max(0,(p.sh-24))*0.6; }
+
+  /* La prenda dibujada como se ve puesta: hombro, manga alrededor del brazo,
+     puño, y el costado del cuerpo asomando entre el brazo y el torso.
+     Las cifras de la ficha siguen siendo medidas de prenda. */
+  function garment(p){
+    var sh=p.sh, y=shY(p),
+        so=31.5+(p.ch-30.75)*0.5,     // borde exterior de la manga
+        ap=18.0+(p.ch-30.75)*0.45,     // sisa
+        wa=p.wa*0.73, hem=p.hem*0.73,  // costado y bajo, ya sobre el cuerpo
+        hy=31+p.len, cy=30+p.slv,
+        co=25+p.cuffW/2, ci=25-p.cuffW/2;
+    var half=
+       'C 12.6,28.3 18.6,30 '+sh+','+y+' '
+      +'C '+(sh+4.6)+','+(y+2)+' '+(so-.7)+','+(y+6)+' '+so+','+(y+12)+' '
+      +'C '+(so+.4)+','+(y+26)+' '+(so+.3)+','+(y+42)+' '+co+','+cy+' '
+      +'L '+ci+','+(cy-1.1)+' '
+      +'C '+(ci+.4)+','+(cy-15)+' '+(ap+1.2)+','+(y+32)+' '+ap+',52 '
+      +'C '+(ap+.5)+',60 '+(wa+.9)+',68 '+wa+',74 '
+      +'C '+(wa+.4)+',88 '+(hem-.3)+','+(hy-11)+' '+hem+','+hy;
+    function neg(q){ return q.replace(/-?\d+(\.\d+)?,/g,function(m){return (-parseFloat(m))+',';}); }
+    var revHalf=
+       'C '+(-(hem-.3))+','+(hy-11)+' '+(-(wa+.4))+',88 '+(-wa)+',74 '
+      +'C '+(-(wa+.9))+',68 '+(-(ap+.5))+',60 '+(-ap)+',52 '
+      +'C '+(-(ap+1.2))+','+(y+32)+' '+(-(ci+.4))+','+(cy-15)+' '+(-ci)+','+(cy-1.1)+' '
+      +'L '+(-co)+','+cy+' '
+      +'C '+(-(so+.3))+','+(y+42)+' '+(-(so+.4))+','+(y+26)+' '+(-so)+','+(y+12)+' '
+      +'C '+(-(so-.7))+','+(y+6)+' '+(-(sh+4.6))+','+(y+2)+' '+(-sh)+','+y+' '
+      +'C -18.6,30 -12.6,28.3 -7.4,27.4';
+    return 'M -7.4,27.4 C -3.4,26.4 3.4,26.4 7.4,27.4 '+half
+      +' L '+(-hem)+','+hy+' '+revHalf+' Z';
+  }
+  function collar(p){ return 'M -7.4,27.4 C -6.6,23.2 6.6,23.2 7.4,27.4'; }
+  function cuffLine(p,side){
+    var cy=30+p.slv, co=25+p.cuffW/2, ci=25-p.cuffW/2, s=side<0?-1:1;
+    return 'M '+(s*ci)+','+(cy-4.4)+' L '+(s*co)+','+(cy-3.6);
+  }
+
+  var gHost=document.getElementById('garment'), SETS={};
+  FITS.forEach(function(p){
+    var col='var(--g-'+p.k+')', d=garment(p);
+    var g=el('g',{class:'gset','data-fit':p.k});
+    g.appendChild(el('path',{class:'gar-f',d:d,style:'fill:'+col}));
+    [d,collar(p),cuffLine(p,1),cuffLine(p,-1)].forEach(function(q){
+      g.appendChild(el('path',{class:'gar',d:q,
+        style:'stroke:'+col+';stroke-dasharray:'+p.dash}));
+    });
+    gHost.appendChild(g);
+    SETS[p.k]=g;
+  });
+
+  var LX=40;
+  var rows=[
+    {y:32.8, half:23.9, ly:28,  key:'hombro', n:'Hombros',  v:'48 cm',    s:'ancho directo'},
+    {y:46.8, half:20.5, ly:52,  key:'pecho', n:'Pecho',    v:'110 cm',   s:'contorno · ancho 40'},
+    {y:70.5, half:16.4, ly:76,  key:'cintura', n:'Cintura',  v:'89 cm',    s:'contorno · ancho 32'},
+    {y:87.8, half:18.4, ly:100, key:'bajo', n:'Cadera',   v:'99 cm',    s:'contorno · ancho 36'}
+  ];
+  var GT={};
+  rows.forEach(function(r){
+    add('calls','path',{class:'call',d:'M '+(r.half+1)+','+r.y+' L '+(LX-14)+','+r.y+' L '+(LX-3)+','+(r.ly-2)});
+    add('calls','circle',{class:'callend',cx:r.half,cy:r.y,r:.85});
+    add('calls','text',{class:'lbl',x:LX,y:r.ly-2.6},r.n.toUpperCase());
+    add('calls','text',{class:'lbl-v',x:LX,y:r.ly+4.6},r.v);
+    add('calls','text',{class:'lbl-s',x:LX,y:r.ly+9.4},r.s);
+    GT[r.key]=add('calls','text',{class:'lbl-g',x:LX,y:r.ly+14.8},'');
+  });
+  add('calls','path',{class:'call',d:'M 28.6,92.5 L '+(LX-14)+',92.5 L '+(LX-3)+',122'});
+  add('calls','circle',{class:'callend',cx:27.8,cy:92.5,r:.85});
+  add('calls','text',{class:'lbl',x:LX,y:121.4},'MANGA');
+  add('calls','text',{class:'lbl-v',x:LX,y:128.6},'62–63 cm');
+  add('calls','text',{class:'lbl-s',x:LX,y:133.4},'hombro a muñeca');
+  GT.manga=add('calls','text',{class:'lbl-g',x:LX,y:138.8},'');
+
+  /* llamada de largo, solo cuando hay un corte solo */
+  var largoG=add('calls','g',{class:'garcall'});
+  var largoLead=el('path',{class:'call',d:''}); largoG.appendChild(largoLead);
+  var largoLbl=el('text',{class:'lbl',x:LX,y:150.4},'LARGO'); largoG.appendChild(largoLbl);
+  var largoVal=el('text',{class:'lbl-g on',x:LX,y:156.6},''); largoG.appendChild(largoVal);
+
+  function vdim(x,y0,y1,label){
+    add('calls','path',{class:'call',d:'M '+x+','+y0+' L '+x+','+y1});
+    add('calls','path',{class:'call',d:'M '+(x-1.6)+','+y0+' L '+(x+1.6)+','+y0+
+      ' M '+(x-1.6)+','+y1+' L '+(x+1.6)+','+y1});
+    var my=(y0+y1)/2;
+    add('calls','text',{class:'vert',x:x,y:my,transform:'rotate(-90,'+x+','+my+')','text-anchor':'middle'},label);
+  }
+  vdim(-66,0,182,'Estatura 182');
+  vdim(-46,95,182,'Entrepierna 87');
+  add('calls','path',{class:'call',d:'M -66,0 L -10,0 M -66,182 L -14,182 M -46,95 L -20,95'});
+  add('calls','path',{class:'call',d:'M -34,46.8 L -30.2,46.8 M -34,70.5 L -30.2,70.5 M -34,46.8 L -34,70.5'});
+  add('calls','text',{class:'lbl-s',x:-36,y:60.2,'text-anchor':'end',style:'fill:var(--accent)'},'drop 21');
+
+  /* ── selección múltiple: botones y filas sincronizados ── */
+  var wrap=document.getElementById('fits'),
+      chips=document.getElementById('chips'),
+      allBtn=document.getElementById('allbtn'),
+      KEYS=FITS.map(function(f){return f.k}),
+      state={slim:false,regular:false,relax:false,target:true};
+
+  function paint(){
+    KEYS.forEach(function(k){
+      var on=state[k];
+      SETS[k].classList.toggle('on',on);
+      chips.querySelector('.chip[data-fit="'+k+'"]').setAttribute('aria-pressed',on?'true':'false');
+      wrap.querySelector('.fitrow[data-fit="'+k+'"]').setAttribute('aria-pressed',on?'true':'false');
+    });
+    var act=KEYS.filter(function(k){return state[k]});
+    allBtn.textContent = act.length===KEYS.length ? 'Ocultar todos' : 'Mostrar todos';
+
+    /* medidas de la prenda sobre cada cota: solo con un corte encendido */
+    var single = act.length===1 ? FITS.filter(function(f){return f.k===act[0]})[0] : null;
+    Object.keys(GT).forEach(function(key){
+      var t=GT[key];
+      if(single){
+        t.textContent = single.nm.toLowerCase()+' · '+single.g[key];
+        t.setAttribute('style','fill:var(--g-'+single.k+')');
+        t.classList.add('on');
+      } else { t.classList.remove('on'); }
+    });
+    if(single){
+      var hy=31+single.len, hx=single.hem*0.73;
+      largoLead.setAttribute('d','M '+hx+','+hy+' L '+(LX-14)+','+hy+' L '+(LX-3)+',148.4');
+      largoVal.textContent=single.nm.toLowerCase()+' · '+single.g.largo;
+      largoVal.setAttribute('style','fill:var(--g-'+single.k+')');
+      largoG.classList.add('on');
+    } else largoG.classList.remove('on');
+  }
+  function toggle(k){ state[k]=!state[k]; paint(); }
+
+  chips.addEventListener('click',function(ev){
+    var b=ev.target.closest('.chip'); if(b) toggle(b.getAttribute('data-fit'));
+  });
+  wrap.addEventListener('click',function(ev){
+    var b=ev.target.closest('.fitrow'); if(b) toggle(b.getAttribute('data-fit'));
+  });
+  allBtn.addEventListener('click',function(){
+    var turnOn=KEYS.filter(function(k){return state[k]}).length<KEYS.length;
+    KEYS.forEach(function(k){ state[k]=turnOn; });
+    paint();
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

@@ -37,6 +37,7 @@ header strong{font-weight:700}
 .tab[aria-selected="true"]{background:var(--olive);color:#fff}
 .tab:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 .panel[hidden]{display:none}
+.atelier-frame{width:100%;border:0;display:block;background:var(--paper);min-height:80vh}
 
 /* Sections */
 section{margin-bottom:44px;scroll-margin-top:70px}
@@ -203,6 +204,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
 <div class="tabs">
   <div class="tabs-in" role="tablist" aria-label="Secciones de la guía">
     <button class="tab" role="tab" id="t-pintas"  aria-controls="p-pintas"  aria-selected="true">Pintas por ocasión</button>
+    <button class="tab" role="tab" id="t-medidas" aria-controls="p-medidas" aria-selected="false">Ficha de medidas</button>
     <button class="tab" role="tab" id="t-guia"    aria-controls="p-guia"    aria-selected="false">Guía: color y horma</button>
     <button class="tab" role="tab" id="t-comprar" aria-controls="p-comprar" aria-selected="false">Qué comprar</button>
   </div>
@@ -240,6 +242,13 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
     <div class="pintas" id="lista"></div>
     <p class="empty" id="empty" hidden>No hay pintas con ese texto. Prueba con <strong>oliva</strong>, <strong>lino</strong>, <strong>botín</strong> o <strong>chino</strong>.</p>
     <noscript><p class="noscript">Esta pestaña dibuja las pintas con JavaScript. Actívalo para verlas, o baja a las otras dos pestañas.</p></noscript>
+  </div>
+</div>
+
+<!-- ============ FICHA DE MEDIDAS (dossier embebido) ============ -->
+<div class="wrap wide">
+  <div class="panel" id="p-medidas" role="tabpanel" aria-labelledby="t-medidas" hidden>
+    <iframe class="atelier-frame" id="atelierFrame" src="atelier.html" title="Ficha de medidas — dossier del sastre" scrolling="no"></iframe>
   </div>
 </div>
 
@@ -809,7 +818,30 @@ tabs.forEach(function(t, i){
   });
 });
 var start = (location.hash || '').replace('#','');
-show(['pintas','guia','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
+show(['pintas','medidas','guia','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
+
+/* ---- ficha de medidas: dossier embebido, alto automático ---- */
+var af = document.getElementById('atelierFrame');
+if(af){
+  var sizeAf = function(){
+    try{
+      var d = af.contentDocument || (af.contentWindow && af.contentWindow.document);
+      if(d && d.documentElement){ af.style.height = d.documentElement.scrollHeight + 'px'; }
+    }catch(e){}
+  };
+  af.addEventListener('load', function(){
+    sizeAf();
+    /* reintentos para cuando terminan de cargar las fuentes web y el layout reflowa */
+    [120, 400, 900].forEach(function(ms){ setTimeout(sizeAf, ms); });
+    try{
+      var d = af.contentDocument || (af.contentWindow && af.contentWindow.document);
+      if(d && d.fonts && d.fonts.ready){ d.fonts.ready.then(sizeAf); }
+    }catch(e){}
+  });
+  window.addEventListener('resize', function(){ clearTimeout(af._t); af._t = setTimeout(sizeAf, 150); });
+  var tabMed = document.getElementById('t-medidas');
+  if(tabMed){ tabMed.addEventListener('click', function(){ [60, 450, 950].forEach(function(ms){ setTimeout(sizeAf, ms); }); }); }
+}
 
 /* ---- checklist y volver arriba ---- */
 document.getElementById('reset').addEventListener('click', function(){
