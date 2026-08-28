@@ -118,6 +118,20 @@
   .fitrow[data-fit="target"] .sw{border-top-style:solid}
   .fitrow[data-fit="relax"] .sw{border-top-style:dotted}
 
+  /* ── prender/apagar cotas ── */
+  .cotas{margin-top:18px}
+  .cotas-t{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+  .cotas-btns{display:flex;flex-wrap:wrap;gap:7px}
+  .cbtn{font-family:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:1px;
+    padding:7px 11px 6px;cursor:pointer;
+    transition:background .2s ease,color .2s ease,border-color .2s ease,opacity .2s ease}
+  .cbtn:hover{border-color:var(--ink)}
+  .cbtn[aria-pressed="true"]{background:var(--sheet-2);border-color:var(--ink-2)}
+  .cbtn[aria-pressed="false"]{opacity:.42;color:var(--muted)}
+  .cbtn:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+  .cota.off{display:none}
+
   /* svg roles */
   .fig-fill{fill:url(#wash)}
   .fig-line{fill:none;stroke:var(--ink);stroke-width:.5;stroke-linejoin:round;opacity:.9}
@@ -241,6 +255,21 @@
 
         <g id="calls"></g>
       </svg>
+
+      <div class="cotas">
+        <span class="cotas-t">Medidas sobre el croquis · préndelas y apágalas</span>
+        <div class="cotas-btns" id="cotasBtns">
+          <button class="cbtn" data-m="estatura"     aria-pressed="true">Estatura</button>
+          <button class="cbtn" data-m="hombros"      aria-pressed="true">Hombros</button>
+          <button class="cbtn" data-m="sobrehombros" aria-pressed="true">Sobre hombros</button>
+          <button class="cbtn" data-m="pecho"        aria-pressed="true">Pecho</button>
+          <button class="cbtn" data-m="cintura"      aria-pressed="true">Cintura</button>
+          <button class="cbtn" data-m="cadera"       aria-pressed="true">Cadera</button>
+          <button class="cbtn" data-m="manga"        aria-pressed="true">Manga</button>
+          <button class="cbtn" data-m="entrepierna"  aria-pressed="true">Entrepierna</button>
+          <button class="cbtn" data-m="drop"         aria-pressed="true">Drop</button>
+        </div>
+      </div>
 
       <div class="chips" id="chips">
         <button class="chip" data-fit="slim" aria-pressed="false"><i></i>Slim</button>
@@ -471,27 +500,44 @@
   });
 
   var LX=40;
+  function addTo(pn,n,a,t){var e=el(n,a,t);pn.appendChild(e);return e;}
+  var CALLS=document.getElementById('calls'), COTAS={};
+  function cota(m){ var g=el('g',{class:'cota','data-m':m}); CALLS.appendChild(g); COTAS[m]=g; return g; }
+
   var rows=[
-    {y:32.8, half:23.9, ly:28,  key:'hombro', n:'Hombros',  v:'48 cm',    s:'ancho directo'},
-    {y:46.8, half:20.5, ly:52,  key:'pecho', n:'Pecho',    v:'110 cm',   s:'contorno · ancho 40'},
-    {y:70.5, half:16.4, ly:76,  key:'cintura', n:'Cintura',  v:'89 cm',    s:'contorno · ancho 32'},
-    {y:87.8, half:18.4, ly:100, key:'bajo', n:'Cadera',   v:'99 cm',    s:'contorno · ancho 36'}
+    {y:32.8, half:23.9, ly:28,  key:'hombro',  m:'hombros', n:'Hombros',  v:'48 cm',  s:'ancho directo'},
+    {y:46.8, half:20.5, ly:52,  key:'pecho',   m:'pecho',   n:'Pecho',    v:'110 cm', s:'contorno · ancho 40'},
+    {y:70.5, half:16.4, ly:76,  key:'cintura', m:'cintura', n:'Cintura',  v:'89 cm',  s:'contorno · ancho 32'},
+    {y:87.8, half:18.4, ly:100, key:'bajo',    m:'cadera',  n:'Cadera',   v:'99 cm',  s:'contorno · ancho 36'}
   ];
   var GT={};
   rows.forEach(function(r){
-    add('calls','path',{class:'call',d:'M '+(r.half+1)+','+r.y+' L '+(LX-14)+','+r.y+' L '+(LX-3)+','+(r.ly-2)});
-    add('calls','circle',{class:'callend',cx:r.half,cy:r.y,r:.85});
-    add('calls','text',{class:'lbl',x:LX,y:r.ly-2.6},r.n.toUpperCase());
-    add('calls','text',{class:'lbl-v',x:LX,y:r.ly+4.6},r.v);
-    add('calls','text',{class:'lbl-s',x:LX,y:r.ly+9.4},r.s);
-    GT[r.key]=add('calls','text',{class:'lbl-g',x:LX,y:r.ly+14.8},'');
+    var g=cota(r.m);
+    addTo(g,'path',{class:'call',d:'M '+(r.half+1)+','+r.y+' L '+(LX-14)+','+r.y+' L '+(LX-3)+','+(r.ly-2)});
+    addTo(g,'circle',{class:'callend',cx:r.half,cy:r.y,r:.85});
+    addTo(g,'text',{class:'lbl',x:LX,y:r.ly-2.6},r.n.toUpperCase());
+    addTo(g,'text',{class:'lbl-v',x:LX,y:r.ly+4.6},r.v);
+    addTo(g,'text',{class:'lbl-s',x:LX,y:r.ly+9.4},r.s);
+    GT[r.key]=addTo(g,'text',{class:'lbl-g',x:LX,y:r.ly+14.8},'');
   });
-  add('calls','path',{class:'call',d:'M 28.6,92.5 L '+(LX-14)+',92.5 L '+(LX-3)+',122'});
-  add('calls','circle',{class:'callend',cx:27.8,cy:92.5,r:.85});
-  add('calls','text',{class:'lbl',x:LX,y:121.4},'MANGA');
-  add('calls','text',{class:'lbl-v',x:LX,y:128.6},'62–63 cm');
-  add('calls','text',{class:'lbl-s',x:LX,y:133.4},'hombro a muñeca');
-  GT.manga=add('calls','text',{class:'lbl-g',x:LX,y:138.8},'');
+
+  /* manga */
+  var gMan=cota('manga');
+  addTo(gMan,'path',{class:'call',d:'M 28.6,92.5 L '+(LX-14)+',92.5 L '+(LX-3)+',122'});
+  addTo(gMan,'circle',{class:'callend',cx:27.8,cy:92.5,r:.85});
+  addTo(gMan,'text',{class:'lbl',x:LX,y:121.4},'MANGA');
+  addTo(gMan,'text',{class:'lbl-v',x:LX,y:128.6},'62–63 cm');
+  addTo(gMan,'text',{class:'lbl-s',x:LX,y:133.4},'hombro a muñeca');
+  GT.manga=addTo(gMan,'text',{class:'lbl-g',x:LX,y:138.8},'');
+
+  /* sobre hombros · over-arm (contorno del tórax pasando sobre los brazos) */
+  var gSH=cota('sobrehombros');
+  addTo(gSH,'path',{class:'call',d:'M -31,53 L 31,53'});
+  addTo(gSH,'path',{class:'call',d:'M -31,50.4 L -31,55.6 M 31,50.4 L 31,55.6'});
+  addTo(gSH,'path',{class:'call',d:'M -31,53 L -39,49.6'});
+  addTo(gSH,'text',{class:'lbl',x:-40,y:42,'text-anchor':'end'},'SOBRE');
+  addTo(gSH,'text',{class:'lbl',x:-40,y:46.4,'text-anchor':'end'},'HOMBROS');
+  addTo(gSH,'text',{class:'lbl-v',x:-40,y:53,'text-anchor':'end'},'135 cm');
 
   /* llamada de largo, solo cuando hay un corte solo */
   var largoG=add('calls','g',{class:'garcall'});
@@ -499,18 +545,35 @@
   var largoLbl=el('text',{class:'lbl',x:LX,y:150.4},'LARGO'); largoG.appendChild(largoLbl);
   var largoVal=el('text',{class:'lbl-g on',x:LX,y:156.6},''); largoG.appendChild(largoVal);
 
-  function vdim(x,y0,y1,label){
-    add('calls','path',{class:'call',d:'M '+x+','+y0+' L '+x+','+y1});
-    add('calls','path',{class:'call',d:'M '+(x-1.6)+','+y0+' L '+(x+1.6)+','+y0+
+  function vdim(parent,x,y0,y1,label){
+    addTo(parent,'path',{class:'call',d:'M '+x+','+y0+' L '+x+','+y1});
+    addTo(parent,'path',{class:'call',d:'M '+(x-1.6)+','+y0+' L '+(x+1.6)+','+y0+
       ' M '+(x-1.6)+','+y1+' L '+(x+1.6)+','+y1});
     var my=(y0+y1)/2;
-    add('calls','text',{class:'vert',x:x,y:my,transform:'rotate(-90,'+x+','+my+')','text-anchor':'middle'},label);
+    addTo(parent,'text',{class:'vert',x:x,y:my,transform:'rotate(-90,'+x+','+my+')','text-anchor':'middle'},label);
   }
-  vdim(-66,0,182,'Estatura 182');
-  vdim(-46,95,182,'Entrepierna 87');
-  add('calls','path',{class:'call',d:'M -66,0 L -10,0 M -66,182 L -14,182 M -46,95 L -20,95'});
-  add('calls','path',{class:'call',d:'M -34,46.8 L -30.2,46.8 M -34,70.5 L -30.2,70.5 M -34,46.8 L -34,70.5'});
-  add('calls','text',{class:'lbl-s',x:-36,y:60.2,'text-anchor':'end',style:'fill:var(--accent)'},'drop 21');
+  var gEst=cota('estatura');
+  vdim(gEst,-66,0,182,'Estatura 182');
+  addTo(gEst,'path',{class:'call',d:'M -66,0 L -10,0 M -66,182 L -14,182'});
+  var gEnt=cota('entrepierna');
+  vdim(gEnt,-46,95,182,'Entrepierna 87');
+  addTo(gEnt,'path',{class:'call',d:'M -46,95 L -20,95'});
+
+  var gDrop=cota('drop');
+  addTo(gDrop,'path',{class:'call',d:'M -34,46.8 L -30.2,46.8 M -34,70.5 L -30.2,70.5 M -34,46.8 L -34,70.5'});
+  addTo(gDrop,'text',{class:'lbl-s',x:-36,y:60.2,'text-anchor':'end',style:'fill:var(--accent)'},'drop 21');
+
+  /* prender / apagar cada cota */
+  var cotasBtns=document.getElementById('cotasBtns');
+  if(cotasBtns){
+    cotasBtns.addEventListener('click',function(ev){
+      var b=ev.target.closest('.cbtn'); if(!b) return;
+      var m=b.getAttribute('data-m'), g=COTAS[m]; if(!g) return;
+      var on = b.getAttribute('aria-pressed')!=='true';
+      b.setAttribute('aria-pressed', on?'true':'false');
+      g.classList.toggle('off', !on);
+    });
+  }
 
   /* ── selección múltiple: botones y filas sincronizados ── */
   var wrap=document.getElementById('fits'),
