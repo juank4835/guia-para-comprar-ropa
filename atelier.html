@@ -197,8 +197,17 @@
   @media (max-width:820px){ .cmp-cols{grid-template-columns:1fr;gap:30px} }
   .cmp-fig svg{width:100%;height:auto;display:block;max-width:340px;margin:0 auto}
   .sil-actual{fill:url(#cmpWash);stroke:var(--ink-2);stroke-width:.5;stroke-linejoin:round}
-  .sil-ideal{fill:none;stroke:var(--g-target);stroke-width:.9;stroke-linejoin:round}
-  .sil-delta{fill:var(--g-target);opacity:.16}
+  .sil-ideal{fill:none;stroke:var(--g-target);stroke-width:1;stroke-linejoin:round}
+  .sil-idealfill{fill:var(--g-target);opacity:.13;stroke:var(--g-target);stroke-width:1;stroke-linejoin:round}
+  .sil-delta{fill:var(--g-target);opacity:.42}
+  .sil-arrow{fill:var(--g-target)}
+  .cmp-toggle{display:flex;gap:7px;justify-content:center;margin-top:14px}
+  .ctg{font-family:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:1px;
+    padding:6px 13px 5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease,opacity .2s ease}
+  .ctg[aria-pressed="true"]{background:var(--sheet-2);border-color:var(--ink-2)}
+  .ctg[aria-pressed="false"]{opacity:.5;color:var(--muted)}
+  .ctg:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
   .cmp-lead{stroke:var(--g-target);stroke-width:.4;opacity:.7}
   .cmp-lbl{font-family:"Jost",sans-serif;font-weight:400;font-size:3.6px;letter-spacing:.14em;
     text-transform:uppercase;fill:var(--g-target)}
@@ -413,6 +422,11 @@
         <div class="cmp-legend">
           <span class="lg"><i class="a"></i>Actual</span>
           <span class="lg"><i class="b"></i>Objetivo</span>
+        </div>
+        <div class="cmp-toggle" id="cmpToggle">
+          <button class="ctg" data-v="actual"   aria-pressed="false">Actual</button>
+          <button class="ctg" data-v="objetivo" aria-pressed="false">Objetivo</button>
+          <button class="ctg" data-v="ambas"    aria-pressed="true">Ambas</button>
         </div>
       </div>
       <div class="cmp-say">
@@ -728,16 +742,52 @@
   var ACT={sh:24, ch:20, wa:16,   hi:18},
       IDE={sh:24, ch:20, wa:14.6, hi:17.4};
 
-  document.getElementById('cmpActual').appendChild(el('path',{class:'sil-actual',d:path(ACT)}));
-  document.getElementById('cmpIdeal').appendChild(el('path',{class:'sil-ideal',d:path(IDE)}));
+  var gA=document.getElementById('cmpActual'),
+      gI=document.getElementById('cmpIdeal'),
+      notes=document.getElementById('cmpNotes'), wy=48;
+
+  /* siluetas */
+  var actualFill = el('path',{class:'sil-actual',   d:path(ACT)});
+  var idealFill  = el('path',{class:'sil-idealfill',d:path(IDE)});   // objetivo relleno (solo en modo Objetivo)
+  var idealLine  = el('path',{class:'sil-ideal',    d:path(IDE)});   // contorno objetivo
+  /* franja a afinar: diferencia entre las dos siluetas (regla par-impar) */
+  var delta      = el('path',{class:'sil-delta', 'fill-rule':'evenodd', d: path(ACT)+' '+path(IDE)});
+
+  gA.appendChild(actualFill);
+  gA.appendChild(delta);
+  gI.appendChild(idealFill);
+  gI.appendChild(idealLine);
+
+  /* flechas “meter hacia dentro” en la cintura, a ambos lados */
+  function arrow(x,dir){ // dir: -1 apunta a la izquierda, +1 a la derecha
+    var tip=x+dir*0.4, base=x+dir*3.2;
+    return 'M '+tip+','+wy+' L '+base+','+(wy-1.5)+' L '+base+','+(wy+1.5)+' Z';
+  }
+  notes.appendChild(el('path',{class:'sil-arrow',d:arrow(ACT.wa,-1)}));   // derecha, apunta adentro
+  notes.appendChild(el('path',{class:'sil-arrow',d:arrow(-ACT.wa,1)}));   // izquierda, apunta adentro
 
   /* cota de la cintura */
-  var notes=document.getElementById('cmpNotes'), wy=48;
-  notes.appendChild(el('path',{class:'cmp-lead',d:'M '+ACT.wa+','+wy+' L 33,'+wy}));
-  notes.appendChild(el('path',{class:'cmp-lead',d:'M '+ACT.wa+','+wy+' L '+IDE.wa+','+wy}));
+  notes.appendChild(el('path',{class:'cmp-lead',d:'M '+(ACT.wa+3.4)+','+wy+' L 33,'+wy}));
   notes.appendChild(el('text',{class:'cmp-lbl',x:34,y:wy-1.4},'Afinar aquí'));
   notes.appendChild(el('text',{class:'cmp-lbl',x:34,y:wy+3.6,style:'fill:var(--ink-2)'},'cintura −7'));
   notes.appendChild(el('text',{class:'cmp-lbl',x:34,y:wy+8.4,style:'fill:var(--muted)'},'89 → 82 cm'));
+
+  /* alternar Actual / Objetivo / Ambas */
+  function show(v){
+    var ambas = v==='ambas', obj = v==='objetivo';
+    actualFill.style.display = obj ? 'none' : '';
+    idealFill.style.display  = obj ? '' : 'none';
+    idealLine.style.display  = (ambas||obj) ? '' : 'none';
+    delta.style.display      = ambas ? '' : 'none';
+    notes.style.display      = ambas ? '' : 'none';
+    [].forEach.call(document.querySelectorAll('#cmpToggle .ctg'), function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-v')===v ? 'true':'false');
+    });
+  }
+  document.getElementById('cmpToggle').addEventListener('click',function(ev){
+    var b=ev.target.closest('.ctg'); if(b) show(b.getAttribute('data-v'));
+  });
+  show('ambas');
 })();
 </script>
 </body>
