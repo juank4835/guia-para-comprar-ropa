@@ -51,7 +51,9 @@ section{margin-bottom:44px;scroll-margin-top:70px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 @media(max-width:640px){.grid2{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.grid3{grid-template-columns:1fr}}
 
 /* Stat tiles */
 .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 12px;text-align:center}
@@ -206,6 +208,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
     <button class="tab" role="tab" id="t-pintas"  aria-controls="p-pintas"  aria-selected="true">Pintas por ocasión</button>
     <button class="tab" role="tab" id="t-medidas" aria-controls="p-medidas" aria-selected="false">Ficha de medidas</button>
     <button class="tab" role="tab" id="t-guia"    aria-controls="p-guia"    aria-selected="false">Guía: color y horma</button>
+    <button class="tab" role="tab" id="t-telas"   aria-controls="p-telas"   aria-selected="false">Telas</button>
     <button class="tab" role="tab" id="t-comprar" aria-controls="p-comprar" aria-selected="false">Qué comprar</button>
   </div>
 </div>
@@ -393,6 +396,101 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
         <p style="font-size:.9rem;color:var(--muted)">Si te gustan estos tonos, úsalos en el <strong style="color:var(--ink)">pantalón</strong> o lejos de la cara.</p>
       </div>
     </section>
+  </div>
+
+  <!-- ============ PESTAÑA: TELAS ============ -->
+  <div class="panel" id="p-telas" role="tabpanel" aria-labelledby="t-telas" hidden>
+
+    <section id="telas">
+      <div class="sec-head">
+        <div class="num n1">1</div>
+        <h2>Los principios<span class="sub">Estructura sin gramaje · para tu silueta en V (pecho 110–114 · cintura 89)</span></h2>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <h3>Cuerpo ≠ grosor</h3>
+          <p style="font-size:.93rem">El <strong>cuerpo</strong> —que la tela mantenga la forma que le dan las pinzas— viene del ligamento y de la calidad del hilo. El <strong>grosor</strong> viene de los gramos. Buscas estructura sin gramaje: que caiga recta desde el hombro <strong>sin sumar volumen</strong> al punto más ancho.</p>
+        </div>
+        <div class="card">
+          <h3>Gramaje</h3>
+          <div class="stat" style="margin:4px 0 12px"><div class="v">110–130</div><div class="l">g/m² · la ventana</div></div>
+          <p style="font-size:.93rem">Por debajo de <strong>100</strong> la tela se pega al cuerpo y marca lo que hay debajo. Por encima de <strong>140</strong> empieza a abultar.</p>
+        </div>
+        <div class="card">
+          <h3>Mate, no brillante</h3>
+          <p style="font-size:.93rem">El brillo avanza hacia el ojo y <strong>expande</strong> visualmente; el acabado mate retrocede. Con pecho ancho, el mate resta anchura sin esfuerzo. Aplica igual a camisas, sacos y chalecos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n2">2</div>
+        <h2>Telas que sirven<span class="sub">Estructura sin peso · buen drapeado</span></h2>
+      </div>
+      <div class="card">
+        <table class="medtabla">
+          <thead><tr><th>Tela</th><th>Para qué</th><th>Por qué funciona</th></tr></thead>
+          <tbody>
+            <tr><td><b>Sarga fina de algodón, dos cabos</b></td><td>Camisa por defecto</td><td class="nt">Cuerpo sin gramos; la diagonal drapea y arruga poco</td></tr>
+            <tr><td><b>Popelina 100/2 o 120/2</b></td><td>Formal, vestido</td><td class="nt">Delgada pero firme; mantiene las pinzas</td></tr>
+            <tr><td><b>Tencel o algodón-tencel</b></td><td>Máxima caída</td><td class="nt">El mejor drapeado de la lista</td></tr>
+            <tr><td><b>Lino-algodón</b></td><td>Tierra caliente, viajes</td><td class="nt">Cae mejor que el lino puro y arruga menos</td></tr>
+            <tr><td><b>Merino fino / punto peinado delgado</b></td><td>Suéteres, chalecos de punto</td><td class="nt">Estructura pegada al cuerpo, marca la V</td></tr>
+            <tr><td><b>Chambray fino</b></td><td>Informal</td><td class="nt">El look denim sin el bulto del denim</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n3">3</div>
+        <h2>Telas que evitar<span class="sub">Suman volumen justo donde no conviene</span></h2>
+      </div>
+      <div class="card">
+        <table class="medtabla">
+          <thead><tr><th>Tela</th><th>Problema</th></tr></thead>
+          <tbody>
+            <tr><td><b>Oxford</b></td><td class="nt">Tejido canasta, grueso — engorda el pecho</td></tr>
+            <tr><td><b>Popelina de un cabo</b></td><td class="nt">Floja y traslúcida; cuelga como carpa</td></tr>
+            <tr><td><b>Cualquier cosa con elastano</b></td><td class="nt">Se pega y delata volumen en vez de disimularlo</td></tr>
+            <tr><td><b>Franela gruesa</b></td><td class="nt">Bulto puro</td></tr>
+            <tr><td><b>Denim de camisa pesado</b></td><td class="nt">Grueso y rígido; no se dobla en la cintura</td></tr>
+            <tr><td><b>Piqué grueso (polos)</b></td><td class="nt">Suma volumen justo a la altura del pecho</td></tr>
+            <tr><td><b>Satén, seda brillante</b></td><td class="nt">El brillo expande visualmente</td></tr>
+            <tr><td><b>Punto grueso, trenzado, bouclé</b></td><td class="nt">Textura marcada = más ancho aparente</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n4">4</div>
+        <h2>Cómo verificarlo en la tienda<span class="sub">Cuatro pruebas de diez segundos</span></h2>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3>Pregunta por los cabos</h3>
+          <p style="font-size:.93rem">«¿Es de dos cabos?» Si no saben, mira la etiqueta: <span class="tag">100/2</span> <span class="tag">120/2</span> <span class="tag">140/2</span> son hilo doble. Un solo número (60s, 80s) es de un cabo.</p>
+        </div>
+        <div class="card">
+          <h3>Prueba del puño</h3>
+          <p style="font-size:.93rem">Aprieta la tela en el puño tres segundos y suelta. Si queda un mapa de arrugas marcadas, arrugará todo el día. Si se recupera casi sola, tiene buena recuperación.</p>
+        </div>
+        <div class="card">
+          <h3>Prueba de la caída</h3>
+          <p style="font-size:.93rem">Sostén la tela colgando de una mano. Si cae en pliegues suaves y verticales, drapea. Si se queda tiesa en ángulo o se colapsa sin forma, no.</p>
+        </div>
+        <div class="card">
+          <h3>Prueba de la luz</h3>
+          <p style="font-size:.93rem">Ponla contra una ventana. Si se ve la silueta de la mano al otro lado, es demasiado delgada.</p>
+        </div>
+      </div>
+      <div class="note green"><strong>Nota de clima · sabana de Bogotá / Chía.</strong> El frío tienta al punto grueso, y ahí es donde una silueta en V se arruina. La solución son <strong>capas finas</strong>, no una prenda gruesa: camisa de sarga + chaleco de merino fino abriga lo mismo que un suéter grueso y deja la línea intacta.</div>
+    </section>
+
   </div>
 
   <!-- ============ PESTAÑA 3: QUÉ COMPRAR ============ -->
@@ -818,7 +916,7 @@ tabs.forEach(function(t, i){
   });
 });
 var start = (location.hash || '').replace('#','');
-show(['pintas','medidas','guia','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
+show(['pintas','medidas','guia','telas','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
 
 /* ---- ficha de medidas: dossier embebido, alto automático ---- */
 var af = document.getElementById('atelierFrame');
