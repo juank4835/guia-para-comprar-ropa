@@ -301,6 +301,7 @@
           <button class="cbtn" data-m="cintura"      aria-pressed="true">Cintura</button>
           <button class="cbtn" data-m="cadera"       aria-pressed="true">Cadera</button>
           <button class="cbtn" data-m="manga"        aria-pressed="true">Manga</button>
+          <button class="cbtn" data-m="torso"        aria-pressed="true">Torso</button>
           <button class="cbtn" data-m="entrepierna"  aria-pressed="true">Entrepierna</button>
           <button class="cbtn" data-m="drop"         aria-pressed="true">Drop</button>
         </div>
@@ -631,6 +632,12 @@
   var gEst=cota('estatura');
   vdim(gEst,-66,0,182,'Estatura 182');
   addTo(gEst,'path',{class:'call',d:'M -66,0 L -10,0 M -66,182 L -14,182'});
+  var gTor=cota('torso');
+  addTo(gTor,'path',{class:'call',d:'M -46,27 L -46,95'});
+  addTo(gTor,'path',{class:'call',d:'M -47.6,27 L -44.4,27 M -47.6,95 L -44.4,95'});
+  addTo(gTor,'path',{class:'call',d:'M -46,27 L -21,27'});
+  addTo(gTor,'text',{class:'vert',x:-46,y:80,transform:'rotate(-90,-46,80)','text-anchor':'middle'},'Torso 68');
+
   var gEnt=cota('entrepierna');
   vdim(gEnt,-46,95,182,'Entrepierna 87');
   addTo(gEnt,'path',{class:'call',d:'M -46,95 L -20,95'});
