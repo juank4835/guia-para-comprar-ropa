@@ -84,6 +84,15 @@ li::before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;bo
 li.no::before{background:var(--terra)}
 li.no{color:#8a5a3a}
 .tag{display:inline-block;background:#efe6d2;color:#6a5a30;border-radius:6px;padding:2px 8px;font-size:.82rem;font-weight:600;white-space:nowrap}
+/* Veredicto ✓/✗ en las pruebas de tela */
+.tdo{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+.tv{display:flex;gap:9px;align-items:baseline;font-size:.9rem;padding:8px 0;border-top:1px solid var(--line)}
+.tv .mk{flex:0 0 auto;font-weight:800;line-height:1.3}
+.tv.good .mk{color:var(--olive)}
+.tv.bad .mk{color:var(--terra)}
+.tv.bad{color:#8a5a3a}
+.tv b{font-weight:700;color:var(--ink)}
+.tv.bad b{color:#8a5a3a}
 
 /* Colores */
 .pill-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
@@ -472,20 +481,28 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
       </div>
       <div class="grid2">
         <div class="card">
-          <h3>Pregunta por los cabos</h3>
-          <p style="font-size:.93rem">«¿Es de dos cabos?» Si no saben, mira la etiqueta: <span class="tag">100/2</span> <span class="tag">120/2</span> <span class="tag">140/2</span> son hilo doble. Un solo número (60s, 80s) es de un cabo.</p>
+          <h3>Los cabos</h3>
+          <p class="tdo">Pregunta «¿es de dos cabos?». Si no saben, mira la etiqueta.</p>
+          <div class="tv good"><span class="mk">✓</span><span><b>Dos cabos, mejor.</b> Etiqueta <span class="tag">100/2</span> <span class="tag">120/2</span> <span class="tag">140/2</span> — hilo doble: más firme, fino y con cuerpo. Es lo que buscas.</span></div>
+          <div class="tv bad"><span class="mk">✗</span><span><b>Un cabo, evita.</b> Un solo número (60s, 80s) — más flojo y traslúcido; cuelga sin forma.</span></div>
         </div>
         <div class="card">
-          <h3>Prueba del puño</h3>
-          <p style="font-size:.93rem">Aprieta la tela en el puño tres segundos y suelta. Si queda un mapa de arrugas marcadas, arrugará todo el día. Si se recupera casi sola, tiene buena recuperación.</p>
+          <h3>Arrugado (prueba del puño)</h3>
+          <p class="tdo">Aprieta la tela en el puño tres segundos y suelta.</p>
+          <div class="tv good"><span class="mk">✓</span><span><b>Se recupera casi sola.</b> Buena recuperación: no arrugará todo el día.</span></div>
+          <div class="tv bad"><span class="mk">✗</span><span><b>Queda un mapa de arrugas.</b> Marcará apenas te sientes o la uses un rato.</span></div>
         </div>
         <div class="card">
-          <h3>Prueba de la caída</h3>
-          <p style="font-size:.93rem">Sostén la tela colgando de una mano. Si cae en pliegues suaves y verticales, drapea. Si se queda tiesa en ángulo o se colapsa sin forma, no.</p>
+          <h3>Caída (drapeado)</h3>
+          <p class="tdo">Sostén la tela colgando de una sola mano.</p>
+          <div class="tv good"><span class="mk">✓</span><span><b>Cae en pliegues suaves y verticales.</b> Drapea: sigue tu línea sin sumar bulto.</span></div>
+          <div class="tv bad"><span class="mk">✗</span><span><b>Se queda tiesa en ángulo o se colapsa sin forma.</b> No drapea.</span></div>
         </div>
         <div class="card">
-          <h3>Prueba de la luz</h3>
-          <p style="font-size:.93rem">Ponla contra una ventana. Si se ve la silueta de la mano al otro lado, es demasiado delgada.</p>
+          <h3>Luz (opacidad)</h3>
+          <p class="tdo">Ponla contra una ventana y mira al trasluz.</p>
+          <div class="tv good"><span class="mk">✓</span><span><b>No se ve la mano al otro lado.</b> Tiene cuerpo: no marcará lo de debajo.</span></div>
+          <div class="tv bad"><span class="mk">✗</span><span><b>Se ve la silueta de la mano.</b> Demasiado delgada: se pega y delata volumen.</span></div>
         </div>
       </div>
       <div class="note green"><strong>Nota de clima · sabana de Bogotá / Chía.</strong> El frío tienta al punto grueso, y ahí es donde una silueta en V se arruina. La solución son <strong>capas finas</strong>, no una prenda gruesa: camisa de sarga + chaleco de merino fino abriga lo mismo que un suéter grueso y deja la línea intacta.</div>
