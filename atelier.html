@@ -192,7 +192,7 @@
 
   /* ── comparación: foto + recoloreo de camiseta ── */
   .compare{padding:clamp(30px,5vw,56px) 0 0}
-  .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#43301f;--pants:#ffffff}
+  .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#432e1f;--pants:#ffffff}
   .pc-img{width:100%;display:block;border-radius:2px}
   .pc-recolor{position:absolute;inset:0;pointer-events:none}
   .pc-shirt{background:var(--shirt);mix-blend-mode:color;
@@ -201,8 +201,19 @@
   .pc-pants{background:var(--pants);mix-blend-mode:multiply;
     -webkit-mask:url(figuras-pantalon-mask.png) center/100% 100% no-repeat;
             mask:url(figuras-pantalon-mask.png) center/100% 100% no-repeat}
-  .pc-note{font-size:12px;color:var(--muted);line-height:1.6;max-width:62ch;margin:6px 0 0}
+  .pc-note{font-size:12px;color:var(--muted);line-height:1.6;max-width:62ch;margin:10px 0 0}
   .pc-note b{color:var(--ink-2)}
+  .pc-target{display:flex;gap:8px;margin:2px 0 16px}
+  .pc-target button{font-family:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    padding:8px 14px;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;border-radius:1px;
+    display:inline-flex;align-items:center;transition:background .2s,border-color .2s}
+  .pc-target button[aria-pressed="true"]{background:var(--sheet-2);border-color:var(--ink-2)}
+  .pc-target button[aria-pressed="false"]{opacity:.55}
+  .pc-target .dot{width:12px;height:12px;border-radius:50%;margin-left:8px;border:1px solid rgba(0,0,0,.22)}
+  .pal-group{margin-bottom:13px}
+  .pal-lbl{display:block;font-family:"Jost",sans-serif;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:7px}
+  .pal-row{display:flex;flex-wrap:wrap;gap:8px}
   .cmp-ctrls{margin-top:22px;border-top:1px solid var(--rule);padding-top:18px}
   .cmp-ctrls .lbl-row{font-family:"Jost",sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
     color:var(--muted);margin:0 0 9px}
@@ -413,7 +424,7 @@
   <!-- ── silueta: actual vs objetivo ── -->
   <section class="compare">
     <h2>Actual vs objetivo</h2>
-    <div class="fr">Tu figura · cintura 89 → 82 · cambia el color de la camiseta</div>
+    <div class="fr">Tu figura · cintura 89 → 82 · cámbiale el color a la camiseta y al pantalón</div>
 
     <div class="photocmp" id="photocmp">
       <img class="pc-img" src="figuras.png" alt="Dos figuras a escala comparando la cintura, con las medidas del cuerpo">
@@ -422,9 +433,14 @@
     </div>
 
     <div class="cmp-ctrls">
-      <p class="lbl-row">Color de la camiseta · tu paleta tierra</p>
-      <div class="sw-row" id="swShirt"><span class="cap">Camiseta</span></div>
-      <div class="sw-row" id="swPants"><span class="cap">Pantalón</span></div>
+      <p class="lbl-row">Cambia el color · elige la prenda y toca un color</p>
+      <div class="pc-target" id="pcTarget">
+        <button type="button" data-t="shirt" aria-pressed="true">Camiseta <span class="dot" id="dotShirt"></span></button>
+        <button type="button" data-t="pants" aria-pressed="false">Pantalón <span class="dot" id="dotPants"></span></button>
+      </div>
+      <div class="pal-group"><span class="pal-lbl">Tierra · cálidos y profundos</span><div class="pal-row" data-grp="calidos"></div></div>
+      <div class="pal-group"><span class="pal-lbl">Neutros</span><div class="pal-row" data-grp="neutros"></div></div>
+      <div class="pal-group"><span class="pal-lbl">Acentos · golpes de color</span><div class="pal-row" data-grp="acentos"></div></div>
       <p class="pc-note">Los colores <b>medios y oscuros</b> se ven mejor; los muy claros quedan más apagados (es lo normal al teñir una foto). Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
     </div>
 
@@ -708,23 +724,39 @@
 /* ── comparación: foto + recoloreo de camiseta + tabla ── */
 (function(){
   var pc=document.getElementById('photocmp'); if(!pc) return;
-  var PAL=[['Chocolate','#43301f'],['Café','#6b4a2e'],['Camel','#b89a6a'],['Arena','#d8cbab'],['Crema','#efe9dd'],['Oliva','#6b7d3a'],['Terracota','#b5591f'],['Petróleo','#1f6b73'],['Marino','#1f2b45'],['Vino','#7a2038']];
-  function swatches(rowId,varName,current){
-    var row=document.getElementById(rowId); if(!row) return;
-    PAL.forEach(function(p){
+  var GROUPS={
+    calidos:[['Verde oliva','#6b7d3a'],['Verde bosque','#2f4a2e'],['Terracota / teja','#b5591f'],['Mostaza / ocre','#d3a23a'],['Camel / caramelo','#b89a6a'],['Chocolate','#432e1f'],['Vino / burdeos','#7a2038'],['Azul petróleo','#1f6b73']],
+    neutros:[['Crema / hueso','#efe9dd'],['Beige / arena','#d8cbab'],['Caqui','#8a7a4a'],['Marino cálido','#1f2b45']],
+    acentos:[['Naranja quemado','#c0561f'],['Coral tostado','#c07a5f'],['Turquesa','#1f9aa0'],['Esmeralda','#1f7a52'],['Dorado','#cf9a1f']]
+  };
+  var target='shirt', current={shirt:'#432e1f',pants:null};
+  var dotShirt=document.getElementById('dotShirt'), dotPants=document.getElementById('dotPants');
+  function setDots(){ dotShirt.style.background=current.shirt||'transparent'; dotPants.style.background=current.pants||'transparent'; }
+  function markSelected(){
+    var cur=current[target]||'';
+    [].forEach.call(document.querySelectorAll('.pal-row .sw'),function(s){
+      s.setAttribute('aria-pressed', s.dataset.hex===cur ? 'true':'false');
+    });
+  }
+  Object.keys(GROUPS).forEach(function(g){
+    var row=document.querySelector('.pal-row[data-grp="'+g+'"]'); if(!row) return;
+    GROUPS[g].forEach(function(p){
       var b=document.createElement('button'); b.className='sw'; b.type='button';
-      b.setAttribute('aria-label',p[0]); b.setAttribute('aria-pressed', p[1]===current?'true':'false');
-      b.style.background=p[1];
+      b.title=p[0]; b.setAttribute('aria-label',p[0]); b.dataset.hex=p[1]; b.style.background=p[1];
       b.addEventListener('click',function(){
-        pc.style.setProperty(varName,p[1]);
-        [].forEach.call(row.querySelectorAll('.sw'),function(s){s.setAttribute('aria-pressed','false');});
-        b.setAttribute('aria-pressed','true');
+        pc.style.setProperty(target==='shirt'?'--shirt':'--pants', p[1]);
+        current[target]=p[1]; setDots(); markSelected();
       });
       row.appendChild(b);
     });
-  }
-  swatches('swShirt','--shirt','#43301f');   /* camiseta: color-blend, default ≈ original */
-  swatches('swPants','--pants',null);        /* pantalón: multiply, default sin teñir */
+  });
+  document.getElementById('pcTarget').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-t]'); if(!b) return;
+    target=b.getAttribute('data-t');
+    [].forEach.call(this.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    markSelected();
+  });
+  setDots(); markSelected();
   var ROWS=[['Estatura','hauteur','182','182',false],['Hombros','épaules · ancho directo','48','48',false],['Pecho','buste · contorno','110','110',false],['Sobre hombros','tour sur bras · over-arm','135','135',false],['Cintura','taille · natural','89','82',true],['Cadera','hanche','99','97',true],['Manga','manche · hombro a muñeca','62–63','62–63',false],['Entrepierna','entrejambe · al suelo','87','87',false],['Torso','buste vertical','95','95',false]];
   function htd(cls,txt){var e=document.createElement('td'); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e;}
   var tb=document.getElementById('cmpTblBody');
