@@ -190,30 +190,16 @@
   .prop .d{font-size:13px;color:var(--ink-2);margin-top:10px;line-height:1.55;max-width:26ch}
   .prop.key .v{color:var(--accent)}
 
-  /* ── comparación: dos figuras + tabla ── */
+  /* ── comparación: foto + recoloreo de camiseta ── */
   .compare{padding:clamp(30px,5vw,56px) 0 0}
-  .cmp2{--skin:#8a6242;--hair:#241a12;--shirt:#432e1f;--pants:#c8b48f;--shoe:#efe9dd;
-    display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,3vw,30px);margin-top:24px;align-items:end}
-  .cmp2 figure{margin:0;text-align:center}
-  .cmp2 figcaption{font-family:"Jost",sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:8px}
-  .cmp2 figcaption b{font-family:"Italiana",serif;font-size:18px;letter-spacing:.04em;font-weight:400;color:var(--ink)}
-  .cmp2 .obj figcaption b{color:var(--g-target)}
-  .cmp2 svg{width:100%;height:auto;display:block}
-  .cf-skin{fill:var(--skin);stroke:rgba(0,0,0,.12);stroke-width:.35}
-  .cf-hair{fill:var(--hair)}
-  .g-shirt{fill:var(--shirt);stroke:rgba(0,0,0,.16);stroke-width:.5;stroke-linejoin:round}
-  .g-pants{fill:var(--pants);stroke:rgba(0,0,0,.14);stroke-width:.5;stroke-linejoin:round}
-  .g-shoe{fill:var(--shoe);stroke:rgba(0,0,0,.14);stroke-width:.4}
-  .cota2{transition:opacity .2s ease}
-  .cota2.off{display:none}
-  .c2-line{fill:none;stroke:var(--ink-2);stroke-width:.5;stroke-dasharray:2 2;opacity:.8}
-  .c2-arrow{fill:var(--ink-2)}
-  .c2-lbl{font-family:"Jost",sans-serif;font-size:4px;fill:var(--ink);font-weight:500;
-    paint-order:stroke;stroke:var(--paper);stroke-width:1.1px}
-  .cota2.accent .c2-line{stroke:var(--g-target);opacity:1;stroke-dasharray:none}
-  .cota2.accent .c2-lbl{fill:var(--g-target);font-weight:700}
-  .cota2.accent .c2-arrow{fill:var(--g-target)}
+  .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#43301f}
+  .pc-img{width:100%;display:block;border-radius:2px}
+  .pc-recolor{position:absolute;inset:0;pointer-events:none}
+  .pc-shirt{background:var(--shirt);mix-blend-mode:color;
+    -webkit-mask:url(figuras-camisa-mask.png) center/100% 100% no-repeat;
+            mask:url(figuras-camisa-mask.png) center/100% 100% no-repeat}
+  .pc-note{font-size:12px;color:var(--muted);line-height:1.6;max-width:62ch;margin:6px 0 0}
+  .pc-note b{color:var(--ink-2)}
   .cmp-ctrls{margin-top:22px;border-top:1px solid var(--rule);padding-top:18px}
   .cmp-ctrls .lbl-row{font-family:"Jost",sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
     color:var(--muted);margin:0 0 9px}
@@ -424,35 +410,17 @@
   <!-- ── silueta: actual vs objetivo ── -->
   <section class="compare">
     <h2>Actual vs objetivo</h2>
-    <div class="fr">Dos siluetas a escala · misma estructura, cintura afinada</div>
+    <div class="fr">Tu figura · cintura 89 → 82 · cambia el color de la camiseta</div>
 
-    <div class="cmp2" id="cmp2">
-      <figure class="act">
-        <figcaption>Actual · cintura <b>89</b></figcaption>
-        <svg id="figA" viewBox="-40 -8 80 200" role="img" aria-label="Figura actual, cintura 89 cm"></svg>
-      </figure>
-      <figure class="obj">
-        <figcaption>Objetivo · cintura <b>82</b></figcaption>
-        <svg id="figB" viewBox="-40 -8 80 200" role="img" aria-label="Figura objetivo, cintura 82 cm"></svg>
-      </figure>
+    <div class="photocmp" id="photocmp">
+      <img class="pc-img" src="figuras.png" alt="Dos figuras a escala comparando la cintura, con las medidas del cuerpo">
+      <div class="pc-recolor pc-shirt"></div>
     </div>
 
     <div class="cmp-ctrls">
-      <p class="lbl-row">Medidas sobre las figuras · préndelas y apágalas</p>
-      <div class="cmp-btns" id="cmp2Btns">
-        <button class="cbtn2" data-m="estatura"     aria-pressed="true">Estatura</button>
-        <button class="cbtn2" data-m="hombros"      aria-pressed="true">Hombros</button>
-        <button class="cbtn2" data-m="pecho"        aria-pressed="true">Pecho</button>
-        <button class="cbtn2" data-m="cintura"      aria-pressed="true">Cintura</button>
-        <button class="cbtn2" data-m="cadera"       aria-pressed="true">Cadera</button>
-        <button class="cbtn2" data-m="sobrehombros" aria-pressed="false">Sobre hombros</button>
-        <button class="cbtn2" data-m="manga"        aria-pressed="false">Manga</button>
-        <button class="cbtn2" data-m="entrepierna"  aria-pressed="false">Entrepierna</button>
-        <button class="cbtn2" data-m="torso"        aria-pressed="false">Torso</button>
-      </div>
-      <p class="lbl-row">Color de prenda · tu paleta tierra</p>
+      <p class="lbl-row">Color de la camiseta · tu paleta tierra</p>
       <div class="sw-row" id="swShirt"><span class="cap">Camiseta</span></div>
-      <div class="sw-row" id="swPants"><span class="cap">Pantalón</span></div>
+      <p class="pc-note">El <b>pantalón</b> no se recolorea aquí: en la foto es casi del mismo tono que el fondo, así que teñirlo se saldría al fondo. Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
     </div>
 
     <table class="cmp-tbl">
@@ -732,136 +700,30 @@
 </script>
 
 <script>
-/* ── comparación: dos figuras vestidas + tabla ── */
+/* ── comparación: foto + recoloreo de camiseta + tabla ── */
 (function(){
-  var NS='http://www.w3.org/2000/svg';
-  function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;return e;}
-  var figA=document.getElementById('figA'); if(!figA) return;
-  var figB=document.getElementById('figB'), wrap=document.getElementById('cmp2');
-
-  function buildFigure(svg, W, isObj){
-    var COT={};
-    function add(p,n,a,t){return p.appendChild(el(n,a,t));}
-    function cota(m,accent){var g=el('g',{class:'cota2'+(accent?' accent':''),'data-m':m}); svg.appendChild(g); COT[m]=g; return g;}
-    var hemW=W+1.4;
-
-    var body=el('g',{}); svg.appendChild(body);
-    /* pelo (atrás) + cuello + cabeza + pelo (frente) */
-    add(body,'ellipse',{class:'cf-hair',cx:0,cy:11,rx:10,ry:12});
-    add(body,'rect',{class:'cf-skin',x:-4,y:19,width:8,height:11,rx:2.5});
-    add(body,'ellipse',{class:'cf-skin',cx:0,cy:14.5,rx:7.9,ry:9.2});
-    add(body,'path',{class:'cf-hair',d:'M -8.4,9 C -6,3.5 6,3.5 8.4,9 C 6,6.4 4.6,6.1 3.4,7.6 C 1.8,5.8 -1.8,5.8 -3.4,7.6 C -4.6,6.1 -6,6.4 -8.4,9 Z'});
-    /* brazos (piel) */
-    add(body,'path',{class:'cf-skin',d:'M 21.5,47 C 26.5,55 25.5,78 21.5,93 C 20.5,96 17,96 17,92.5 C 17,78 17.5,58 18,49 Z'});
-    add(body,'path',{class:'cf-skin',d:'M -21.5,47 C -26.5,55 -25.5,78 -21.5,93 C -20.5,96 -17,96 -17,92.5 C -17,78 -17.5,58 -18,49 Z'});
-    /* pantalón */
-    add(body,'path',{class:'g-pants',d:
-      'M '+(-(W+1))+',88 L '+(W+1)+',88 '
-      +'C 19,98 18,102 18,110 C 17,132 12,152 9,181 L 4.4,181 '
-      +'C 3.6,150 2,130 1,116 L 0,111 L -1,116 '
-      +'C -2,130 -3.6,150 -4.4,181 L -9,181 '
-      +'C -12,152 -17,132 -18,110 C -18,102 -19,98 '+(-(W+1))+',88 Z'});
-    /* zapatos */
-    add(body,'path',{class:'g-shoe',d:'M 3.4,179 L 9.6,179 C 12.6,179 15,181 15,185 L 2.4,185 C 1.2,185 1.4,181 3.4,179 Z'});
-    add(body,'path',{class:'g-shoe',d:'M -3.4,179 L -9.6,179 C -12.6,179 -15,181 -15,185 L -2.4,185 C -1.2,185 -1.4,181 -3.4,179 Z'});
-    /* camisa (encima de brazos y pantalón) */
-    add(body,'path',{class:'g-shirt',d:
-      'M -4,28 C -2,31 2,31 4,28 '
-      +'L 21,31 C 26,32 30,35 30,39 C 30,45 28,50 26,52 L 18.5,51 '
-      +'C 19.5,58 '+(W+3)+',74 '+(W+2)+',90 L '+hemW+',93 L 0,94 L '+(-hemW)+',93 '
-      +'C '+(-(W+3))+',74 -19.5,58 -18.5,51 L -26,52 C -28,50 -30,45 -30,39 '
-      +'C -30,35 -26,32 -21,31 L -4,28 Z'});
-
-    /* ── cotas ── */
-    function girth(m,y,half,label,accent){
-      var g=cota(m,accent);
-      add(g,'line',{class:'c2-line',x1:-half,y1:y,x2:half,y2:y});
-      add(g,'text',{class:'c2-lbl',x:half+3,y:y+1.4},label);
-    }
-    if(!isObj){
-      var ge=cota('estatura');
-      add(ge,'line',{class:'c2-line',x1:-34,y1:1,x2:-34,y2:182});
-      add(ge,'line',{class:'c2-line',x1:-35.6,y1:1,x2:-32.4,y2:1});
-      add(ge,'line',{class:'c2-line',x1:-35.6,y1:182,x2:-32.4,y2:182});
-      add(ge,'text',{class:'c2-lbl',x:-33,y:96,transform:'rotate(-90,-33,96)','text-anchor':'middle'},'ESTATURA 182');
-    } else { COT.estatura=el('g',{class:'cota2','data-m':'estatura'}); svg.appendChild(COT.estatura); }
-    var gh=cota('hombros');
-    add(gh,'line',{class:'c2-line',x1:-22,y1:34,x2:22,y2:34,style:'stroke-dasharray:none'});
-    add(gh,'path',{class:'c2-arrow',d:'M -22,34 l 2.8,-1.5 l 0,3 Z'});
-    add(gh,'path',{class:'c2-arrow',d:'M 22,34 l -2.8,-1.5 l 0,3 Z'});
-    add(gh,'text',{class:'c2-lbl',x:0,y:28.5,'text-anchor':'middle'},'48 cm');
-    girth('pecho',54,20,'110 cm',false);
-    girth('cintura',90,W,(isObj?'82':'89')+' cm',true);
-    girth('cadera',104,18,'99 cm',false);
-    var gs=cota('sobrehombros'); gs.classList.add('off');
-    add(gs,'line',{class:'c2-line',x1:-30,y1:47,x2:30,y2:47});
-    add(gs,'text',{class:'c2-lbl',x:32,y:48.4},'135 cm');
-    var gm=cota('manga'); gm.classList.add('off');
-    add(gm,'line',{class:'c2-line',x1:23,y1:33,x2:19.5,y2:93});
-    add(gm,'text',{class:'c2-lbl',x:25,y:66},'62–63');
-    var gt=cota('entrepierna'); gt.classList.add('off');
-    add(gt,'line',{class:'c2-line',x1:-24,y1:112,x2:-24,y2:182});
-    add(gt,'text',{class:'c2-lbl',x:-23,y:150,transform:'rotate(-90,-23,150)','text-anchor':'middle'},'87 cm');
-    var gto=cota('torso'); gto.classList.add('off');
-    add(gto,'line',{class:'c2-line',x1:26,y1:30,x2:26,y2:111});
-    add(gto,'text',{class:'c2-lbl',x:27,y:70,transform:'rotate(-90,27,70)','text-anchor':'middle'},'95 cm');
-    return COT;
-  }
-
-  var cotasA=buildFigure(figA,16,false),
-      cotasB=buildFigure(figB,14.7,true);
-
-  /* toggles por medida (afecta ambas figuras) */
-  document.getElementById('cmp2Btns').addEventListener('click',function(ev){
-    var b=ev.target.closest('.cbtn2'); if(!b) return;
-    var m=b.getAttribute('data-m'), on=b.getAttribute('aria-pressed')!=='true';
-    b.setAttribute('aria-pressed',on?'true':'false');
-    [cotasA[m],cotasB[m]].forEach(function(g){ if(g) g.classList.toggle('off',!on); });
-  });
-
-  /* swatches de color por prenda */
-  var PAL=[['Chocolate','#432e1f'],['Café','#6b4a2e'],['Camel','#b89a6a'],['Arena','#d8cbab'],['Crema','#efe9dd'],['Oliva','#6b7d3a'],['Terracota','#b5591f'],['Petróleo','#1f6b73'],['Marino','#1f2b45'],['Vino','#7a2038']];
-  function swatches(rowId,varName,current){
-    var row=document.getElementById(rowId);
-    PAL.forEach(function(p){
-      var b=document.createElement('button');
-      b.className='sw'; b.type='button';
-      b.setAttribute('aria-label',p[0]);
-      b.setAttribute('aria-pressed', p[1]===current?'true':'false');
-      b.style.background=p[1];
-      b.addEventListener('click',function(){
-        wrap.style.setProperty(varName,p[1]);
-        [].forEach.call(row.querySelectorAll('.sw'),function(s){s.setAttribute('aria-pressed','false');});
-        b.setAttribute('aria-pressed','true');
-      });
-      row.appendChild(b);
+  var pc=document.getElementById('photocmp'); if(!pc) return;
+  var PAL=[['Chocolate','#43301f'],['Café','#6b4a2e'],['Camel','#b89a6a'],['Arena','#d8cbab'],['Crema','#efe9dd'],['Oliva','#6b7d3a'],['Terracota','#b5591f'],['Petróleo','#1f6b73'],['Marino','#1f2b45'],['Vino','#7a2038']];
+  var row=document.getElementById('swShirt');
+  PAL.forEach(function(p){
+    var b=document.createElement('button'); b.className='sw'; b.type='button';
+    b.setAttribute('aria-label',p[0]); b.setAttribute('aria-pressed', p[1]==='#43301f'?'true':'false');
+    b.style.background=p[1];
+    b.addEventListener('click',function(){
+      pc.style.setProperty('--shirt',p[1]);
+      [].forEach.call(row.querySelectorAll('.sw'),function(s){s.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
     });
-  }
-  swatches('swShirt','--shirt','#432e1f');
-  swatches('swPants','--pants','#c8b48f');
-
-  /* tabla 2 columnas */
-  var ROWS=[
-    ['Estatura','hauteur','182','182',false],
-    ['Hombros','épaules · ancho directo','48','48',false],
-    ['Pecho','buste · contorno','110','110',false],
-    ['Sobre hombros','tour sur bras · over-arm','135','135',false],
-    ['Cintura','taille · natural','89','82',true],
-    ['Cadera','hanche','99','97',true],
-    ['Manga','manche · hombro a muñeca','62–63','62–63',false],
-    ['Entrepierna','entrejambe · al suelo','87','87',false],
-    ['Torso','buste vertical','95','95',false]
-  ];
+    row.appendChild(b);
+  });
+  var ROWS=[['Estatura','hauteur','182','182',false],['Hombros','épaules · ancho directo','48','48',false],['Pecho','buste · contorno','110','110',false],['Sobre hombros','tour sur bras · over-arm','135','135',false],['Cintura','taille · natural','89','82',true],['Cadera','hanche','99','97',true],['Manga','manche · hombro a muñeca','62–63','62–63',false],['Entrepierna','entrejambe · al suelo','87','87',false],['Torso','buste vertical','95','95',false]];
   function htd(cls,txt){var e=document.createElement('td'); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e;}
   var tb=document.getElementById('cmpTblBody');
   ROWS.forEach(function(r){
     var tr=document.createElement('tr'); if(r[4])tr.className='diff';
     var td0=htd('m'); td0.appendChild(document.createTextNode(r[0]));
-    var em=document.createElement('em'); em.textContent=r[1]; td0.appendChild(em);
-    tr.appendChild(td0);
-    tr.appendChild(htd(null,r[2]));
-    tr.appendChild(htd('obj',r[3]));
-    tb.appendChild(tr);
+    var em=document.createElement('em'); em.textContent=r[1]; td0.appendChild(em); tr.appendChild(td0);
+    tr.appendChild(htd(null,r[2])); tr.appendChild(htd('obj',r[3])); tb.appendChild(tr);
   });
 })();
 </script>
