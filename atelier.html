@@ -192,12 +192,15 @@
 
   /* ── comparación: foto + recoloreo de camiseta ── */
   .compare{padding:clamp(30px,5vw,56px) 0 0}
-  .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#43301f}
+  .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#43301f;--pants:#ffffff}
   .pc-img{width:100%;display:block;border-radius:2px}
   .pc-recolor{position:absolute;inset:0;pointer-events:none}
   .pc-shirt{background:var(--shirt);mix-blend-mode:color;
     -webkit-mask:url(figuras-camisa-mask.png) center/100% 100% no-repeat;
             mask:url(figuras-camisa-mask.png) center/100% 100% no-repeat}
+  .pc-pants{background:var(--pants);mix-blend-mode:multiply;
+    -webkit-mask:url(figuras-pantalon-mask.png) center/100% 100% no-repeat;
+            mask:url(figuras-pantalon-mask.png) center/100% 100% no-repeat}
   .pc-note{font-size:12px;color:var(--muted);line-height:1.6;max-width:62ch;margin:6px 0 0}
   .pc-note b{color:var(--ink-2)}
   .cmp-ctrls{margin-top:22px;border-top:1px solid var(--rule);padding-top:18px}
@@ -415,12 +418,14 @@
     <div class="photocmp" id="photocmp">
       <img class="pc-img" src="figuras.png" alt="Dos figuras a escala comparando la cintura, con las medidas del cuerpo">
       <div class="pc-recolor pc-shirt"></div>
+      <div class="pc-recolor pc-pants"></div>
     </div>
 
     <div class="cmp-ctrls">
       <p class="lbl-row">Color de la camiseta · tu paleta tierra</p>
       <div class="sw-row" id="swShirt"><span class="cap">Camiseta</span></div>
-      <p class="pc-note">El <b>pantalón</b> no se recolorea aquí: en la foto es casi del mismo tono que el fondo, así que teñirlo se saldría al fondo. Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
+      <div class="sw-row" id="swPants"><span class="cap">Pantalón</span></div>
+      <p class="pc-note">Los colores <b>medios y oscuros</b> se ven mejor; los muy claros quedan más apagados (es lo normal al teñir una foto). Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
     </div>
 
     <table class="cmp-tbl">
@@ -704,18 +709,22 @@
 (function(){
   var pc=document.getElementById('photocmp'); if(!pc) return;
   var PAL=[['Chocolate','#43301f'],['Café','#6b4a2e'],['Camel','#b89a6a'],['Arena','#d8cbab'],['Crema','#efe9dd'],['Oliva','#6b7d3a'],['Terracota','#b5591f'],['Petróleo','#1f6b73'],['Marino','#1f2b45'],['Vino','#7a2038']];
-  var row=document.getElementById('swShirt');
-  PAL.forEach(function(p){
-    var b=document.createElement('button'); b.className='sw'; b.type='button';
-    b.setAttribute('aria-label',p[0]); b.setAttribute('aria-pressed', p[1]==='#43301f'?'true':'false');
-    b.style.background=p[1];
-    b.addEventListener('click',function(){
-      pc.style.setProperty('--shirt',p[1]);
-      [].forEach.call(row.querySelectorAll('.sw'),function(s){s.setAttribute('aria-pressed','false');});
-      b.setAttribute('aria-pressed','true');
+  function swatches(rowId,varName,current){
+    var row=document.getElementById(rowId); if(!row) return;
+    PAL.forEach(function(p){
+      var b=document.createElement('button'); b.className='sw'; b.type='button';
+      b.setAttribute('aria-label',p[0]); b.setAttribute('aria-pressed', p[1]===current?'true':'false');
+      b.style.background=p[1];
+      b.addEventListener('click',function(){
+        pc.style.setProperty(varName,p[1]);
+        [].forEach.call(row.querySelectorAll('.sw'),function(s){s.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true');
+      });
+      row.appendChild(b);
     });
-    row.appendChild(b);
-  });
+  }
+  swatches('swShirt','--shirt','#43301f');   /* camiseta: color-blend, default ≈ original */
+  swatches('swPants','--pants',null);        /* pantalón: multiply, default sin teñir */
   var ROWS=[['Estatura','hauteur','182','182',false],['Hombros','épaules · ancho directo','48','48',false],['Pecho','buste · contorno','110','110',false],['Sobre hombros','tour sur bras · over-arm','135','135',false],['Cintura','taille · natural','89','82',true],['Cadera','hanche','99','97',true],['Manga','manche · hombro a muñeca','62–63','62–63',false],['Entrepierna','entrejambe · al suelo','87','87',false],['Torso','buste vertical','95','95',false]];
   function htd(cls,txt){var e=document.createElement('td'); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e;}
   var tb=document.getElementById('cmpTblBody');
