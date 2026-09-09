@@ -94,6 +94,29 @@ li.no{color:#8a5a3a}
 .tv b{font-weight:700;color:var(--ink)}
 .tv.bad b{color:#8a5a3a}
 
+/* Horma de camiseta — ficha técnica */
+.horma-sheet{padding:0;overflow:hidden}
+.horma-tb{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:16px 20px;border-bottom:1px solid var(--line);background:#fbf8f2}
+.horma-tb .t{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--ink)}
+.horma-tb .m{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.horma-svg{width:100%;height:auto;display:block;max-width:560px;margin:6px auto;padding:0 12px}
+.horma-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:14px 20px;
+  border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+.horma-legend span{display:flex;align-items:center;gap:8px}
+.horma-legend i{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+.horma-foot{font-size:.82rem;color:var(--muted);margin-top:12px}
+.hz{color:#fff}
+.hz.fija{background:#b23a2f}
+.hz.ajustable{background:#6b7d3a}
+.hz.parcial{background:#c08a2d}
+.hnum{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;color:#fff;
+  font-size:.72rem;font-weight:800;font-variant-numeric:tabular-nums}
+.hnum.fija{background:#b23a2f}
+.hnum.ajustable{background:#6b7d3a}
+.hnum.parcial{background:#c08a2d}
+#hormaTabla th:first-child,#hormaTabla td:first-child{width:34px;padding-right:6px}
+
 /* Colores */
 .pill-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .pill-title h3{margin:0}
@@ -216,6 +239,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
   <div class="tabs-in" role="tablist" aria-label="Secciones de la guía">
     <button class="tab" role="tab" id="t-pintas"  aria-controls="p-pintas"  aria-selected="true">Pintas por ocasión</button>
     <button class="tab" role="tab" id="t-medidas" aria-controls="p-medidas" aria-selected="false">Ficha de medidas</button>
+    <button class="tab" role="tab" id="t-camiseta" aria-controls="p-camiseta" aria-selected="false">Horma de camiseta</button>
     <button class="tab" role="tab" id="t-guia"    aria-controls="p-guia"    aria-selected="false">Guía: color y horma</button>
     <button class="tab" role="tab" id="t-telas"   aria-controls="p-telas"   aria-selected="false">Telas</button>
     <button class="tab" role="tab" id="t-comprar" aria-controls="p-comprar" aria-selected="false">Qué comprar</button>
@@ -264,6 +288,71 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
   </div>
 </div>
 
+<!-- ============ PESTAÑA: HORMA DE CAMISETA ============ -->
+<div class="wrap">
+  <div class="panel" id="p-camiseta" role="tabpanel" aria-labelledby="t-camiseta" hidden>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n1">1</div>
+        <h2>Horma de camiseta<span class="sub">Patrón: camiseta azul · llevar todas las camisetas a esta horma</span></h2>
+      </div>
+      <div class="note green"><strong>La regla:</strong> la camiseta azul es el patrón. Lo <strong style="color:#b23a2f">rojo</strong> es fijo (si una camiseta no coincide ahí, se descarta); lo <strong style="color:#6b7d3a">verde</strong> lo arregla el sastre; lo <strong style="color:#c08a2d">ámbar</strong> se cierra 1–2 cm al entallar el costado.</div>
+      <div class="card horma-sheet">
+        <div class="horma-tb">
+          <span class="t">Camiseta · patrón</span>
+          <span class="m">Medidas de prenda · cm</span>
+        </div>
+        <svg class="horma-svg" viewBox="0 0 420 344" role="img" aria-label="Camiseta extendida vista de frente con sus medidas anotadas en centímetros">
+          <defs>
+            <marker id="harw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/>
+            </marker>
+          </defs>
+          <g stroke="rgba(0,0,0,.34)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M186,74 L140,82 L88,120 L104,162 L128,152 C133,182 141,205 142,226 L128,290 L292,290 L278,226 C279,205 287,182 292,152 L316,162 L332,120 L280,82 L234,74 C224,96 210,104 210,104 C210,104 196,96 186,74 Z" fill="#3568a0"/>
+            <path d="M188,79 C198,93 210,100 210,100 C210,100 222,93 232,79" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="1.4"/>
+            <path d="M146,85 L183,78 M274,85 L237,78" fill="none" stroke="rgba(255,255,255,.26)" stroke-width="1.1"/>
+            <path d="M93,125 L106,157 M327,125 L314,157" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.2"/>
+            <path d="M134,284 L286,284" fill="none" stroke="rgba(255,255,255,.26)" stroke-width="1.1"/>
+          </g>
+          <g id="hormaDim"></g>
+          <g id="hormaLbl"></g>
+        </svg>
+        <div class="horma-legend">
+          <span><i style="background:#b23a2f"></i> Fija · no cambia (si no coincide, se descarta)</span>
+          <span><i style="background:#6b7d3a"></i> Ajustable · trabajo de sastre</span>
+          <span><i style="background:#c08a2d"></i> Parcial · se cierra 1–2 cm al entallar</span>
+        </div>
+      </div>
+      <p class="horma-foot"><strong>Largo trasero 66,5 cm</strong> (por la espalda, desde la tira del cuello) no va en el dibujo; está en la tabla.</p>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n2">2</div>
+        <h2>Tabla de medidas<span class="sub">Valor, si se ajusta y cómo se mide</span></h2>
+      </div>
+      <div class="card">
+        <table class="medtabla" id="hormaTabla">
+          <thead><tr><th>#</th><th>Medida</th><th>Valor</th><th>¿Se ajusta?</th><th>Cómo se mide</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <div class="num n3">3</div>
+        <h2>Para el sastre y para la tienda<span class="sub">Dos instrucciones que resuelven cada camiseta</span></h2>
+      </div>
+      <div class="note"><strong>Instrucción para el sastre:</strong> entallar el costado hasta la cintura (52) y dejar que abra hacia el ruedo (58), siguiendo la línea de la camiseta azul. Manga a 20 de largo y 18 de abertura. No tocar hombro, cuello ni sisa.</div>
+      <div class="note green"><strong>Regla de compra:</strong> revisar primero el hombro (48–50) y el pecho (60–63) en la tabla de tallas de la marca; si el hombro pasa de 51, no sirve. Cuello de 10 a 12 de profundidad. Tela de punto de peso medio (160–200 g/m²) con 5–8 % de elastano; evitar tanto la tela muy fina que se pega como el algodón rígido de más de 250 g.</div>
+    </section>
+
+  </div>
+</div>
+
 <div class="wrap">
 
   <!-- ============ PESTAÑA 2: GUÍA ============ -->
@@ -276,26 +365,31 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
       </div>
       <div class="card">
         <div class="grid4">
-          <div class="stat"><div class="v">XL</div><div class="l">Talla de camisa</div></div>
+          <div class="stat"><div class="v">L</div><div class="l">Talla de camisa</div></div>
           <div class="stat"><div class="v">182 cm</div><div class="l">Estatura</div></div>
-          <div class="stat"><div class="v">114 cm</div><div class="l">Pecho</div></div>
-          <div class="stat"><div class="v">89 cm</div><div class="l">Cintura</div></div>
+          <div class="stat"><div class="v">105,5 cm</div><div class="l">Pecho</div></div>
+          <div class="stat"><div class="v">94 cm</div><div class="l">Cintura</div></div>
         </div>
         <table class="medtabla">
           <thead><tr><th>Medida</th><th>Valor</th><th>Nota</th></tr></thead>
           <tbody>
             <tr><td class="m">Estatura</td><td class="val">182 cm</td><td class="nt">Estatura alta: favorece líneas largas y verticales.</td></tr>
-            <tr><td class="m">Pecho</td><td class="val">114 cm</td><td class="nt">Talla XL en la mayoría de camisas de marca.</td></tr>
-            <tr><td class="m">Cintura natural</td><td class="val">89 cm</td><td class="nt">≈35" · talla 34 en pantalón.</td></tr>
-            <tr><td class="m">Cadera</td><td class="val">99 cm</td><td class="nt">Índice cintura-cadera ≈ 0,90: silueta en V.</td></tr>
+            <tr><td class="m">Cuello</td><td class="val">42 cm</td><td class="nt">Talla de cuello para camisa de vestir.</td></tr>
             <tr><td class="m">Hombros</td><td class="val">48 cm</td><td class="nt">La que decide la talla del saco.</td></tr>
+            <tr><td class="m">Deltoides <em>(punto a punto)</em></td><td class="val">49,2 cm</td><td class="nt">Ancho de hombros de deltoide a deltoide.</td></tr>
+            <tr><td class="m">Pecho</td><td class="val">105,5 cm</td><td class="nt">Talla L en la mayoría de camisas de marca.</td></tr>
+            <tr><td class="m">Cintura natural</td><td class="val">94 cm</td><td class="nt">Punto más estrecho del torso (InBody).</td></tr>
+            <tr><td class="m">Cadera <em>(contorno)</em></td><td class="val">99 cm</td><td class="nt">Índice cintura-cadera ≈ 0,95: silueta en V.</td></tr>
+            <tr><td class="m">Cadera <em>(punto a punto)</em></td><td class="val">32,2 cm</td><td class="nt">Ancho frontal de cadera; base del ratio en V.</td></tr>
+            <tr><td class="m">Ratio V <em>(deltoide ÷ cadera)</em></td><td class="val">1,53</td><td class="nt">Objetivo <strong>1,60</strong> para una V más marcada.</td></tr>
             <tr><td class="m">Largo de manga</td><td class="val">62–63 cm</td><td class="nt">Rango L estándar: casi siempre te sirve.</td></tr>
             <tr><td class="m">Entrepierna al suelo</td><td class="val">87 cm</td><td class="nt">Largo de pierna (inseam) para pantalón.</td></tr>
             <tr><td class="m">Torso</td><td class="val">95 cm</td><td class="nt">Relación pierna-torso equilibrada.</td></tr>
             <tr><td class="m">Tiro</td><td class="val">25–27 cm</td><td class="nt">Medio: el que mejor te cae.</td></tr>
           </tbody>
         </table>
-        <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (114 cm) frente a cintura estrecha (89 cm): <em>25 cm de diferencia</em>, silueta en V marcada. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Talla base <strong>XL</strong> en camisa, <strong>34</strong> en pantalón.</div>
+        <div class="note warm"><strong>Consideración clave:</strong> pecho amplio (105,5 cm) frente a cintura estrecha (94 cm): <em>11,5 cm de diferencia</em>, silueta en V marcada. Cuesta encontrar camisas que ajusten bien: buscas cortes que den espacio en el pecho <strong>sin</strong> quedar holgados en la cintura. Talla base <strong>L</strong> en camisa, <strong>34</strong> en pantalón.</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Medidas tomadas con <strong>InBody</strong> · jul 2026.</p>
       </div>
     </section>
 
@@ -413,7 +507,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
     <section id="telas">
       <div class="sec-head">
         <div class="num n1">1</div>
-        <h2>Los principios<span class="sub">Estructura sin gramaje · para tu silueta en V (pecho 110–114 · cintura 89)</span></h2>
+        <h2>Los principios<span class="sub">Estructura sin gramaje · para tu silueta en V (pecho 105,5 · cintura 94)</span></h2>
       </div>
       <div class="grid3">
         <div class="card">
@@ -463,7 +557,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
           <tbody>
             <tr><td><b>Oxford</b></td><td class="nt">Tejido canasta, grueso — engorda el pecho</td></tr>
             <tr><td><b>Popelina de un cabo</b></td><td class="nt">Floja y traslúcida; cuelga como carpa</td></tr>
-            <tr><td><b>Cualquier cosa con elastano</b></td><td class="nt">Se pega y delata volumen en vez de disimularlo</td></tr>
+            <tr><td><b>Elastano en camisas de tela plana</b></td><td class="nt">En camisa de vestir se pega y delata volumen; la estructura la da la sarga de dos cabos. En camisetas y punto sí conviene (5–8 %): ver pestaña <strong>Horma de camiseta</strong>.</td></tr>
             <tr><td><b>Franela gruesa</b></td><td class="nt">Bulto puro</td></tr>
             <tr><td><b>Denim de camisa pesado</b></td><td class="nt">Grueso y rígido; no se dobla en la cintura</td></tr>
             <tr><td><b>Piqué grueso (polos)</b></td><td class="nt">Suma volumen justo a la altura del pecho</td></tr>
@@ -585,7 +679,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
       <p class="lead">Lo que resuelve el ~90 % del problema, en cinco pasos. Marca a medida que revisas.</p>
       <ul>
         <li><label><input type="checkbox"><span>Pide o busca en la etiqueta <span class="tag">athletic / tapered fit</span> con algo de <span class="tag">stretch (5–8 %)</span>.</span></label></li>
-        <li><label><input type="checkbox"><span>Talla base <strong>XL</strong> en camisa (34 en pantalón), pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</span></label></li>
+        <li><label><input type="checkbox"><span>Talla base <strong>L</strong> en camisa (34 en pantalón), pero prueba el ajuste real: espacio en pecho, sin bolsas en cintura.</span></label></li>
         <li><label><input type="checkbox"><span>Elige el color en su versión <strong>más cálida y con cuerpo</strong>; neutros en crema/beige antes que blanco puro.</span></label></li>
         <li><label><input type="checkbox"><span>Escotes en V o cuellos abiertos; líneas verticales y tonos parejos.</span></label></li>
         <li><label><input type="checkbox"><span>Ten un <strong>sastre de confianza</strong> para entallar la cintura de lo que te guste pero sobre.</span></label></li>
@@ -595,7 +689,7 @@ footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px}
   </div>
 
   <footer>
-    Guía personal · basada en tus notas de colores, horma y medidas (ago 2026).
+    Guía personal · basada en tus notas de colores, horma y medidas (sep 2026).
     <br><a class="dl" href="guia.pdf" download>Descargar versión PDF</a>
   </footer>
 
@@ -933,7 +1027,7 @@ tabs.forEach(function(t, i){
   });
 });
 var start = (location.hash || '').replace('#','');
-show(['pintas','medidas','guia','telas','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
+show(['pintas','medidas','camiseta','guia','telas','comprar'].indexOf(start) !== -1 ? start : 'pintas', false);
 
 /* ---- ficha de medidas: dossier embebido, alto automático ---- */
 var af = document.getElementById('atelierFrame');
@@ -957,6 +1051,75 @@ if(af){
   var tabMed = document.getElementById('t-medidas');
   if(tabMed){ tabMed.addEventListener('click', function(){ [60, 450, 950].forEach(function(ms){ setTimeout(sizeAf, ms); }); }); }
 }
+
+/* ---- Horma de camiseta ----
+   Un solo objeto con los datos. Cambiando 'val' se actualizan la píldora
+   del dibujo y la tabla; no hay que tocar el SVG. */
+var HORMA = [
+  {k:'hombro',        label:'Hombro (costura a costura)',   val:'48',   tipo:'fija',      como:'De punta de hombro a punta de hombro, por la costura.',            span:[140,46,280,46],  ext:[[140,80,140,46],[280,80,280,46]], pill:[210,46]},
+  {k:'cuello',        label:'Ancho de cuello',              val:'24',   tipo:'fija',      como:'Abertura del cuello de lado a lado, en recto.',                    span:[186,74,234,74],  pill:[120,62]},
+  {k:'profcuello',    label:'Profundidad de cuello',        val:'11',   tipo:'fija',      como:'Línea recta entre hombros hasta el fondo del escote.',             span:[210,78,210,101], pill:[292,62]},
+  {k:'mangasisa',     label:'Ancho de manga en sisa',       val:'26',   tipo:'fija',      como:'Ancho de la manga a la altura de la sisa.',                        span:[138,84,128,150], pill:[182,108]},
+  {k:'profsisa',      label:'Profundidad de sisa',          val:'24',   tipo:'parcial',   como:'Del hombro hasta la axila.',                                       span:[110,84,110,150], ext:[[138,84,110,84],[128,150,110,150]], pill:[66,116]},
+  {k:'largomanga',    label:'Largo de manga',               val:'20',   tipo:'ajustable', como:'De la costura del hombro al final de la manga.',                   span:[140,82,92,118],  pill:[78,68]},
+  {k:'aberturamanga', label:'Ancho de manga en abertura',   val:'18',   tipo:'ajustable', como:'Ancho de la boca de la manga.',                                    span:[88,120,104,162], pill:[48,152]},
+  {k:'pecho',         label:'Pecho (2 cm bajo la axila)',   val:'60',   tipo:'ajustable', como:'Ancho de la prenda 2 cm por debajo de la axila.',                  span:[128,164,292,164], pill:[210,164]},
+  {k:'cintura',       label:'Cintura (punto más estrecho)', val:'52',   tipo:'ajustable', como:'Ancho en el punto más estrecho del costado.',                      span:[142,226,278,226], pill:[210,226]},
+  {k:'ruedo',         label:'Ruedo',                        val:'58',   tipo:'ajustable', como:'Ancho del bajo (más ancho que la cintura a propósito).',           span:[128,306,292,306], ext:[[128,290,128,306],[292,290,292,306]], pill:[210,306]},
+  {k:'largodel',      label:'Largo delantero',              val:'70',   tipo:'ajustable', como:'Del hombro junto al cuello hasta el ruedo, por delante.',          span:[312,80,312,290], ext:[[236,74,312,74],[292,290,312,290]], pill:[358,185]},
+  {k:'largotras',     label:'Largo trasero',                val:'66,5', tipo:'ajustable', como:'Debajo de la tira del cuello hasta el ruedo, por la espalda.'}
+];
+(function(){
+  var dim = document.getElementById('hormaDim'),
+      lbl = document.getElementById('hormaLbl'),
+      body = document.querySelector('#hormaTabla tbody');
+  if(!dim || !lbl || !body) return;
+  var NS = 'http://www.w3.org/2000/svg', TINTA = '#5a5248';
+  var COL = {fija:'#b23a2f', ajustable:'#6b7d3a', parcial:'#c08a2d'};
+  var NOMBRE = {fija:'Fija', ajustable:'Ajustable', parcial:'Parcial'};
+  function el(n,a){ var e=document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); return e; }
+
+  HORMA.forEach(function(m, idx){
+    var c = COL[m.tipo];
+    // líneas de extensión (del borde de la prenda a la línea de cota)
+    if(m.ext) m.ext.forEach(function(e){
+      dim.appendChild(el('path',{d:'M'+e[0]+','+e[1]+' L'+e[2]+','+e[3],stroke:c,'stroke-width':1,opacity:.5,fill:'none'}));
+    });
+    if(m.span){
+      var x1=m.span[0],y1=m.span[1],x2=m.span[2],y2=m.span[3], mx=(x1+x2)/2, my=(y1+y2)/2;
+      // línea de cota con flechas en los dos extremos, del color de la medida
+      dim.appendChild(el('path',{d:'M'+x1+','+y1+' L'+x2+','+y2,stroke:c,'stroke-width':1.5,fill:'none','marker-start':'url(#harw)','marker-end':'url(#harw)'}));
+      // guía desde la píldora al punto más cercano de la cota (solo si va al margen)
+      if(m.pill){
+        var dx=x2-x1,dy=y2-y1,L2=dx*dx+dy*dy||1;
+        var tt=Math.max(0,Math.min(1,((m.pill[0]-x1)*dx+(m.pill[1]-y1)*dy)/L2));
+        var cx=x1+tt*dx, cy=y1+tt*dy;
+        if(Math.hypot(m.pill[0]-cx,m.pill[1]-cy)>16){
+          dim.appendChild(el('path',{d:'M'+m.pill[0]+','+m.pill[1]+' L'+cx+','+cy,stroke:c,'stroke-width':1,opacity:.6,fill:'none'}));
+        }
+      }
+    }
+    if(m.pill){
+      var s=m.val, nr=7, w=Math.max(23, s.length*7.4+12), h=17.5, x=m.pill[0]-w/2, y=m.pill[1]-h/2;
+      lbl.appendChild(el('rect',{x:x,y:y,width:w,height:h,rx:4.5,fill:COL[m.tipo],stroke:'rgba(0,0,0,.2)','stroke-width':.6}));
+      var tx=el('text',{x:m.pill[0]+nr*0.55,y:m.pill[1]+0.4,fill:'#fff','font-size':11,'font-weight':700,'text-anchor':'middle','dominant-baseline':'central','font-family':'system-ui,sans-serif'});
+      tx.textContent=s; lbl.appendChild(tx);
+      // número (keyed a la tabla) en un chip a la izquierda de la píldora
+      var ncx=x-nr+2.5, ncy=m.pill[1];
+      lbl.appendChild(el('circle',{cx:ncx,cy:ncy,r:nr,fill:COL[m.tipo],stroke:'#fbf8f2','stroke-width':1.4}));
+      var nt=el('text',{x:ncx,y:ncy+0.3,fill:'#fff','font-size':8.6,'font-weight':800,'text-anchor':'middle','dominant-baseline':'central','font-family':'system-ui,sans-serif'});
+      nt.textContent=(idx+1); lbl.appendChild(nt);
+    }
+  });
+
+  body.innerHTML = HORMA.map(function(m, i){
+    return '<tr><td><span class="hnum '+m.tipo+'">'+(i+1)+'</span></td>'+
+      '<td class="m">'+m.label+'</td>'+
+      '<td class="val">'+m.val+' cm</td>'+
+      '<td><span class="tag hz '+m.tipo+'">'+NOMBRE[m.tipo]+'</span></td>'+
+      '<td class="nt">'+m.como+'</td></tr>';
+  }).join('');
+})();
 
 /* ---- checklist y volver arriba ---- */
 document.getElementById('reset').addEventListener('click', function(){
