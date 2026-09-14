@@ -194,19 +194,13 @@
   .compare{padding:clamp(30px,5vw,56px) 0 0}
   .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#432e1f;--pants:#ffffff}
   .pc-img{width:100%;display:block;border-radius:2px}
-  .pc-recolor{position:absolute;inset:0;pointer-events:none}
-  /* la camisa base es más oscura que el pantalón: primero la subimos a un tono claro
-     (screen) y luego multiplicamos el color, para que el vino/oliva/etc. salgan igual
-     de fieles que en el pantalón y no rosados */
-  .pc-shirt-lift{background:#a8a8a8;mix-blend-mode:screen;
-    -webkit-mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat;
-            mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat}
-  .pc-shirt{background:var(--shirt);mix-blend-mode:multiply;
-    -webkit-mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat;
-            mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat}
-  .pc-pants{background:var(--pants);mix-blend-mode:multiply;
-    -webkit-mask:url(figuras-pantalon-mask.png?v=3) center/100% 100% no-repeat;
-            mask:url(figuras-pantalon-mask.png?v=3) center/100% 100% no-repeat}
+  /* overlays de color: imágenes ya recoloreadas con el tono exacto (misma foto,
+     mismos pliegues y sombras), superpuestas sobre la foto original */
+  .pc-ov{position:absolute;inset:0;width:100%;height:auto;display:block;pointer-events:none}
+  .pc-reset{font-family:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    margin-top:14px;padding:7px 12px;border:1px solid var(--rule);background:transparent;
+    color:var(--muted);cursor:pointer;border-radius:1px}
+  .pc-reset:hover{color:var(--ink);border-color:var(--ink)}
   .pc-note{font-size:12px;color:var(--muted);line-height:1.6;max-width:62ch;margin:10px 0 0}
   .pc-note b{color:var(--ink-2)}
   .pc-target{display:flex;gap:8px;margin:2px 0 16px}
@@ -444,9 +438,8 @@
 
     <div class="photocmp" id="photocmp">
       <img class="pc-img" src="figuras.png?v=2" alt="Dos figuras a escala comparando la cintura, con las medidas del cuerpo">
-      <div class="pc-recolor pc-shirt-lift"></div>
-      <div class="pc-recolor pc-shirt"></div>
-      <div class="pc-recolor pc-pants"></div>
+      <img class="pc-ov" id="ovShirt" alt="" aria-hidden="true" hidden>
+      <img class="pc-ov" id="ovPants" alt="" aria-hidden="true" hidden>
     </div>
 
     <div class="cmp-ctrls">
@@ -458,7 +451,8 @@
       <div class="pal-group"><span class="pal-lbl">Tierra · cálidos y profundos</span><div class="pal-row" data-grp="calidos"></div></div>
       <div class="pal-group"><span class="pal-lbl">Neutros</span><div class="pal-row" data-grp="neutros"></div></div>
       <div class="pal-group"><span class="pal-lbl">Acentos · golpes de color</span><div class="pal-row" data-grp="acentos"></div></div>
-      <p class="pc-note">Los colores <b>medios y oscuros</b> se ven mejor; los muy claros quedan más apagados (es lo normal al teñir una foto). Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
+      <button type="button" id="pcReset" class="pc-reset">× Quitar color (volver al original)</button>
+      <p class="pc-note">Cada color se ve sobre la prenda con su <b>tono exacto</b>, conservando pliegues y sombras. Y los números <b>93 / 85</b> impresos en la imagen son de la plantilla — los tuyos reales (89 / 82 y demás) están en la tabla de abajo.</p>
     </div>
 
     <table class="cmp-tbl">
@@ -742,16 +736,17 @@
 (function(){
   var pc=document.getElementById('photocmp'); if(!pc) return;
   var GROUPS={
-    calidos:[['Verde oliva','#6b7d3a'],['Verde bosque','#2f4a2e'],['Terracota / teja','#b5591f'],['Mostaza / ocre','#d3a23a'],['Camel / caramelo','#b89a6a'],['Chocolate','#432e1f'],['Vino / burdeos','#7a2038'],['Azul petróleo','#1f6b73']],
-    neutros:[['Crema / hueso','#efe9dd'],['Beige / arena','#d8cbab'],['Caqui','#8a7a4a'],['Marino cálido','#1f2b45']],
-    acentos:[['Naranja quemado','#c0561f'],['Coral tostado','#c07a5f'],['Turquesa','#1f9aa0'],['Esmeralda','#1f7a52'],['Dorado','#cf9a1f']]
+    calidos:[['Verde oliva','#6b7d3a','oliva'],['Verde bosque','#2f4a2e','bosque'],['Terracota / teja','#b5591f','terracota'],['Mostaza / ocre','#d3a23a','mostaza'],['Camel / caramelo','#b89a6a','camel'],['Chocolate','#432e1f','chocolate'],['Vino / burdeos','#7a2038','vino'],['Azul petróleo','#1f6b73','petroleo']],
+    neutros:[['Crema / hueso','#efe9dd','crema'],['Beige / arena','#d8cbab','arena'],['Caqui','#8a7a4a','caqui'],['Marino cálido','#1f2b45','marino']],
+    acentos:[['Naranja quemado','#c0561f','naranja'],['Coral tostado','#c07a5f','coral'],['Turquesa','#1f9aa0','turquesa'],['Esmeralda','#1f7a52','esmeralda'],['Dorado','#cf9a1f','dorado']]
   };
-  var target='shirt', current={shirt:'#432e1f',pants:null}, curName={shirt:'Chocolate',pants:null};
+  var ovShirt=document.getElementById('ovShirt'), ovPants=document.getElementById('ovPants');
+  var target='shirt', current={shirt:null,pants:null}, curName={shirt:null,pants:null};
   var dotShirt=document.getElementById('dotShirt'), dotPants=document.getElementById('dotPants');
   var cnShirt=document.getElementById('cnShirt'), cnPants=document.getElementById('cnPants');
   function setDots(){
     dotShirt.style.background=current.shirt||'transparent'; dotPants.style.background=current.pants||'transparent';
-    cnShirt.textContent=curName.shirt||''; cnPants.textContent=curName.pants||'original';
+    cnShirt.textContent=curName.shirt||'original'; cnPants.textContent=curName.pants||'original';
   }
   function markSelected(){
     var cur=current[target]||'';
@@ -763,13 +758,19 @@
     var row=document.querySelector('.pal-row[data-grp="'+g+'"]'); if(!row) return;
     GROUPS[g].forEach(function(p){
       var b=document.createElement('button'); b.className='sw'; b.type='button';
-      b.dataset.name=p[0]; b.setAttribute('aria-label',p[0]); b.dataset.hex=p[1]; b.style.background=p[1];
+      b.dataset.name=p[0]; b.setAttribute('aria-label',p[0]); b.dataset.hex=p[1]; b.dataset.slug=p[2]; b.style.background=p[1];
       b.addEventListener('click',function(){
-        pc.style.setProperty(target==='shirt'?'--shirt':'--pants', p[1]);
+        var ov=target==='shirt'?ovShirt:ovPants;
+        ov.src='col/'+target+'-'+p[2]+'.webp'; ov.hidden=false;
         current[target]=p[1]; curName[target]=p[0]; setDots(); markSelected();
       });
       row.appendChild(b);
     });
+  });
+  document.getElementById('pcReset').addEventListener('click',function(){
+    var ov=target==='shirt'?ovShirt:ovPants;
+    ov.hidden=true; ov.removeAttribute('src');
+    current[target]=null; curName[target]=null; setDots(); markSelected();
   });
   document.getElementById('pcTarget').addEventListener('click',function(e){
     var b=e.target.closest('button[data-t]'); if(!b) return;
