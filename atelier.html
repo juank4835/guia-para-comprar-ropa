@@ -195,7 +195,13 @@
   .photocmp{position:relative;max-width:720px;margin:24px auto 0;isolation:isolate;--shirt:#432e1f;--pants:#ffffff}
   .pc-img{width:100%;display:block;border-radius:2px}
   .pc-recolor{position:absolute;inset:0;pointer-events:none}
-  .pc-shirt{background:var(--shirt);mix-blend-mode:color;
+  /* la camisa base es más oscura que el pantalón: primero la subimos a un tono claro
+     (screen) y luego multiplicamos el color, para que el vino/oliva/etc. salgan igual
+     de fieles que en el pantalón y no rosados */
+  .pc-shirt-lift{background:#a8a8a8;mix-blend-mode:screen;
+    -webkit-mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat;
+            mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat}
+  .pc-shirt{background:var(--shirt);mix-blend-mode:multiply;
     -webkit-mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat;
             mask:url(figuras-camisa-mask.png?v=2) center/100% 100% no-repeat}
   .pc-pants{background:var(--pants);mix-blend-mode:multiply;
@@ -438,6 +444,7 @@
 
     <div class="photocmp" id="photocmp">
       <img class="pc-img" src="figuras.png?v=2" alt="Dos figuras a escala comparando la cintura, con las medidas del cuerpo">
+      <div class="pc-recolor pc-shirt-lift"></div>
       <div class="pc-recolor pc-shirt"></div>
       <div class="pc-recolor pc-pants"></div>
     </div>
